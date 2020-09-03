@@ -1,0 +1,169 @@
+<!doctype html>
+<style>
+	.show-tap-image {
+		bottom: 50px;
+		display: block;
+		left: 58%;
+    max-width: 15px !important;
+    min-width: 60px !important;
+		position: fixed;
+	}
+	.scroll-container {overflow: auto; overflow-x: hidden;margin: 0 auto; border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px; }
+	@media (max-width: 767px) {
+		.show-tap-image {
+			left: 40%;
+			max-width: 20px !important;
+			min-width: 70px !important;
+		}
+		.mobile-touch { display: none !important;}
+		.scroll-container {display: none !important;}
+	}
+	.mCSB_inside > .mCSB_container {
+		margin-right: 0px!important;
+	}
+	.popover {
+    width: 150px;
+		border: none !important;
+    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.2);
+	}
+	.popover .arrow::after, .popover .arrow::before{
+		border-style: none !important;
+	}
+	.popover-header {
+		background-color: white !important;
+    border-bottom: none !important;
+		font-size: 20px !important;
+	}
+	.popover-body {
+		font-size: 12px !important;
+		padding: .75rem !important;
+		padding-top: 0px !important;
+	}
+
+	#popover-1 h3.popover-header {
+		color: red;
+	}
+</style>
+<a href="#self" class="left-arrow mobile-touch">&nbsp;</a>
+	<div class="screenshots">
+		<div id="email-container" class="scroll-container"  >
+			<img data-route-name="anita-apr" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
+			src="w-anita2.png" usemap="#image_map" alt="email content"/>
+			<map name="image_map">
+				<area style="display: inline;" id="bubble-position-1"  alt="" title="exceed" onclick='openPopover(1);'
+				data-container="#popover-1" data-toggle="popover"
+				data-placement="left" title="Popover Header" data-content="Intelligent alert triggering based on probability of exceeding budget"
+				coords="100,170,100,100" original-coords="100,170,100,100" shape="rect">
+
+				<area style="display: inline;" id="bubble-position-2" alt="" title="$80" onclick='openPopover(2);'
+				data-container="#popover-2" data-toggle="popover"
+				data-placement="left" title="Popover Header" data-content="Adaptive budget for each bill cycle based on your annual usage trend"
+				coords="240,140,145,100" original-coords="240,140,145,100" shape="rect">
+
+				<area style="display: inline;" id="bubble-position-3" title="Smart budget" alt="" onclick='openPopover(3);'
+				data-container="#popover-3" data-toggle="popover"
+				data-placement="left"
+				data-content="<div><a class='popup'>Click here </a></div>"
+				data-html="true"
+				coords="50,265,100,100" original-coords="50,265,100,100" shape="rect">
+			</map>
+
+			<img class="email-content" style="display:none; z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
+			src="m-Smart Budget-anita-apr.png" alt="email content"/>
+		</div>
+	</div>
+	<div class="mobile-img-div">
+		<img src="m-anita2.png" alt="" />
+	</div>
+	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
+	<div id="popover-1" style="position: absolute;"></div>
+	<div id="popover-bubble-line-1" style="border: 1px solid #A1A5B1; transform: rotate(-164.83deg); position:absolute;"> </div>
+
+	<div id="popover-2" style="position: absolute;"> </div>
+	<div id="popover-bubble-line-2" style="border: 1px solid #A1A5B1; transform: rotate(-193.83deg); position:absolute;"> </div>
+
+	<div id="popover-3" style="position: absolute;"> </div>
+	<div id="popover-bubble-line-3" style="border: 1px solid #A1A5B1; transform: rotate(-164.83deg); position:absolute;"> </div>
+
+	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;" ></div>
+	<div id="mobile-bubble-tap-2" class="mobile-bubble-tap" style="position: absolute;" ></div>
+	<div id="mobile-bubble-tap-3" class="mobile-bubble-tap" style="position: absolute;" ></div>
+
+<a href="#self" class="right-arrow mobile-touch">&nbsp;</a>
+
+<!-- two -->
+<script>
+//Navi Naverton
+$(document).ready(function(){
+	setTimeout(function(){
+		$('.show-tap-image').css("display", "none");
+	}, 3000);
+
+	$(document).on("click", ".popup", function() {
+		testShowPopover();
+	});
+
+	$('#email-content').on('dragstart', function(event) { event.preventDefault(); });
+
+	$("#email-container").fadeIn(1000);
+
+	$('.scroll-container').mCustomScrollbar({
+		theme:"dark",
+		scrollbarPosition:"inside",
+		callbacks:{
+			whileScrolling:function() {
+				scrollBubbleContent(this);
+			}
+		}
+	});
+
+	function leftArrowContent() {
+		$('#phone-content').load("anita-feb.html");
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.one').parent().removeClass('pearl');
+		$('.one').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.one').children('img').attr('src', 'dot_hover_2x.png');
+	}
+
+	function rightArrowContent() {
+		$('#phone-content').load("anita-jun.html");
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.jun').parent().removeClass('pearl');
+		$('.jun').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.jun').children('img').attr('src', 'dot_hover_2x.png');
+	}
+
+	$(".left-arrow").click(function(){
+		leftArrowContent();
+	});
+
+	$(".right-arrow").click(function(){
+		rightArrowContent();
+	});
+
+	$(".mobile-img-div, .email-content").on("swipeleft", function(e) {
+		e.preventDefault();
+		testHidePopover();
+		rightArrowContent();
+	});
+
+	$(".mobile-img-div, .email-content").on("swiperight", function(e) {
+		e.preventDefault();
+		testHidePopover();
+		leftArrowContent();
+	});
+
+});
+</script>
+
+<script>
+	$('#sources').on('change', function() {
+	  $('#phone-content').load(this.value);
+	});
+
+</script>

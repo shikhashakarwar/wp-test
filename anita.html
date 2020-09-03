@@ -1,0 +1,819 @@
+<!doctype html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0;" />
+
+<style>
+ 	body, html { margin: 0; padding: 0; height:100%; z-index:400; font-size:14px;}
+	.persona {max-width:500px; margin:auto;}
+	#ajax-content { padding-left:0 !important; padding-right:0 !important; }
+	.phone-layout {
+		height:100%;
+		top:0;
+		bottom:0;
+		left:0; right:0;
+		margin:auto;
+		text-align:center;
+		height: 0;
+		display: none;
+	}
+
+	.cursor-swipe {cursor: url('cursor-swipe.png'), auto !important; width:100%; height:auto; margin:auto;}
+	.cursor-swipe:hover {cursor: -webkit-grab !important; cursor: grab !important;}
+	.cursor-swipe:active {cursor: -webkit-grabbing !important; cursor: grabbing !important;}
+
+	.select-css {
+		display: block;
+		font-size: 16px;
+		font-family: sans-serif;
+		font-weight: 700;
+		color: #444;
+		line-height: 1.3;
+		padding: .6em 1.4em .5em .8em;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		margin: 0;
+		border: 1px solid #aaa;
+		box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+		border-radius: .5em;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		appearance: none;
+		background-color: #fff;
+		background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+			linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+		background-repeat: no-repeat, repeat;
+		background-position: right .7em top 50%, 0 0;
+		background-size: .65em auto, 100%;
+	}
+	.select-css::-ms-expand { display: none; }
+	.select-css:hover { border-color: #888; }
+	.select-css:focus {
+		border-color: #aaa;
+		box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+		box-shadow: 0 0 0 3px -moz-mac-focusring;
+		color: #222;
+		outline: none;
+	}
+	.select-css option { font-weight:normal; }
+
+	a {text-decoration:none !important; cursor:pointer !important; padding: 10px 0px;}
+	.tab-links:hover {cursor: pointer !important;}
+	.tab-links {text-decoration:none !important; color:#212529 !important; cursor:pointer !important;}
+	.timeline {display:none;}
+	.activepearl {border: 1px solid #000000; border-bottom: 0px; text-align: center; background-color:#FFFFFF; padding-top:10px; padding-bottom:5px;}
+	.pearl {border-left: 0px solid #000000; border-right: 0px solid #000000; border-bottom: 1px solid #000000; border-top: 0px solid #FFFFFF; text-align: center; background-color:transparent; padding-top:10px; padding-bottom:5px;}
+	.nopearl {border: 1px solid #000000; border-left: 0px; border-top: 0px; border-right: 0px; text-align: center; background-color:transparent; padding-top:10px; padding-bottom:5px;}
+	.pearl:hover {border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000; border-top: 0px solid #FFFFFF; background-color:#FFFFFF; padding-top:10px; padding-bottom:5px;}
+	.dotty {position:absolute; top:-9px; left:46.5%; z-index:3;}
+	.timeline-desktop {width:100%; height:auto; min-height:50px; display:none;}
+
+	.option1 {width:100%; height:auto; min-height:50px; max-height:50px; display:none;}
+	.option2 {width:100%; height:auto; min-height:50px; max-height:50px; display:none;}
+	.option3 { width:100%; height:auto; min-height:50px; max-height:50px; display:none;}
+	.option4 {width:100%; height:auto; min-height:50px; max-height:50px; display:none;}
+	.poption1 {display:none;}
+	.poption2 {display:none;}
+	.poption3 {display:none;}
+	.poption4 {display:none;}
+
+	.tab-links {text-decoration:none !important; color:#212529 !important;}
+
+	#left { text-align: center; height:100%; }
+	#right { height:100%; text-align: center; }
+
+	.left-arrow {background: url("arrow-lt_normal.png") no-repeat left center; background-size: 60px 100px; display: block; position: fixed; left:0; top:350px; width:4%; min-width:60px; height:auto; text-decoration:none !important; margin-top:auto; margin-bottom:auto; min-height:100px; display:block; z-index:500;}
+	.left-arrow:hover {background: url("arrow-lt_hover.png") no-repeat left center; background-size: 60px 100px;  z-index:500;}
+	.screenshots {width:100%; position:absolute; left:0%; right:0%; padding-top:0px; display:none;}
+	.right-arrow {background: url("arrow-rt_normal.png")no-repeat right center; background-size: 60px 100px; display: block; position: fixed; right:0; top:350px; width:4%; min-width:60px; height:auto; text-decoration:none !important; margin-top:auto; margin-bottom:auto; min-height:100px; display:block; z-index:500;}
+	.right-arrow:hover {background: url("arrow-rt_hover.png") no-repeat right center; background-size: 60px 100px;  z-index:500;}
+
+	.mobile-img-div {display:block;}
+	.mobile-img-div img {display:block; min-width:100%; height:auto; max-width:100%; margin:auto;}
+
+	.overflow-hidden {overflow:visible !important;}
+	.persona-img-container {text-align: center; width:100%; max-width:240px; margin:auto;}
+	.persona-img {width:100%; height:auto; padding:0; margin:0; margin-left:auto; margin-right:auto;}
+
+	@media (min-width: 768px) {
+		.persona-img-container {text-align: center; width:100%; max-width:190px; margin:auto;}
+		.persona-img {width:auto; max-height:100px; padding:0; margin:0; margin-left:auto; margin-right:auto;}
+		.left-arrow {background: url("arrow-lt_normal.png") no-repeat left center; background-size: 60px 100px; display: block; position: absolute; left:0; top:100px; width:8%; min-width:60px; height:auto; text-decoration:none !important; margin-top:auto; margin-bottom:auto; min-height:100px; display:block; z-index:500;}
+		.left-arrow:hover {background: url("arrow-lt_hover.png") no-repeat left center; background-size: 60px 100px;  z-index:500;}
+		.screenshots {display:block;}
+		.right-arrow {background: url("arrow-rt_normal.png")no-repeat right center; background-size: 60px 100px; display: block; position: absolute; right:0; top:100px; width:8%; min-width:60px; height:auto; text-decoration:none !important; margin-top:auto; margin-bottom:auto; min-height:100px; display:block; z-index:500;}
+		.right-arrow:hover {background: url("arrow-rt_hover.png") no-repeat right center; background-size: 60px 100px;  z-index:500;}
+		.mobile-img-div {display:none;}
+		.mobile-img-div img {display:none; min-width:92%; height:auto; max-width:92%; margin:auto;}
+
+		#ajax-content {padding-left: 15px; padding-right:15px;}
+		#left { position: relative; top: 0px; bottom: 0; left: 0; overflow:hidden;  }
+		#right { position:absolute; top: 0; bottom: 0; right: 0; overflow-y: scroll; margin-top:73px; }
+
+		.select-css {display: none;}
+		.dotty {position:absolute; top:-9px; left:43%; z-index:3;}
+
+		.timeline {position: absolute; top:27px; width:100%; display:block;}
+		.timeline-desktop {width:100%; height:auto; min-height:50px; max-height:50px; display:block;}
+		.option1 {width:100%; height:auto; min-height:50px; max-height:50px; display:none;}
+		.option2 {width:100%; height:auto; min-height:50px; max-height:50px; display:none;}
+		.option3 { width:100%; height:auto; min-height:50px; max-height:50px; display:none;}
+		.option4 {width:100%; height:auto; min-height:50px; max-height:50px; display:none;}
+		.poption1 {display:block;}
+		.poption2 {display:block;}
+		.poption3 {display:block;}
+		.poption4 {display:block;}
+
+		.phone-layout { display: block; }
+	 	.set-phone-content { flex: 0 0 0% !important; }
+	}
+
+	@media (min-width: 860px){
+		a {text-decoration:none !important; cursor:pointer !important; padding: 10px 4px;}
+	}
+
+	@media only screen and (orientation: landscape) {
+		.left-arrow {background: url("arrow-lt_normal.png") no-repeat left center; background-size: 60px 100px; display: block; position: fixed; left:0; top:150px; width:4%; min-width:60px; height:auto; text-decoration:none !important; margin-top:auto; margin-bottom:auto; min-height:100px; display:block; z-index:500;}
+		.left-arrow:hover {background: url("arrow-lt_hover.png") no-repeat left center; background-size: 60px 100px;  z-index:500;}
+		.right-arrow {background: url("arrow-rt_normal.png")no-repeat right center; background-size: 60px 100px; display: block; position: fixed; right:0; top:150px; width:4%; min-width:60px; height:auto; text-decoration:none !important; margin-top:auto; margin-bottom:auto; min-height:100px; display:block; z-index:500;}
+		.right-arrow:hover {background: url("arrow-rt_hover.png") no-repeat right center; background-size: 60px 100px;  z-index:500;}
+	}
+
+	#phone-content {
+		top: 13%;     /* previous top: 16px; */
+		bottom: 0px;
+		left: 1px;
+		right: 0px;
+		margin: auto;
+		text-align: center;
+		position: absolute;
+	}
+
+	@media (max-width: 767px) {
+		#phone-content {
+			left: 0px !important;
+			right: 0px !important;
+		}
+	}
+
+	#loading {
+		width:0px;
+		position:absolute;
+		top:50%;
+		margin:auto;
+		left:0;
+		right:0;
+		z-index: -100;
+	}
+
+	.bubble_left:before {
+		position: absolute;
+		left: -8px;
+		bottom: -4px;
+		content: '';
+		background: #FFFFFF;
+		border: 1px solid #A1A5B1;
+		border-radius: 50%;
+		width: 7px;
+		height: 7px;
+	}
+
+	.bubble_right:before {
+		position: absolute;
+		right: -8px;
+		bottom: -4px;
+		content: '';
+		background: #FFFFFF;
+		border: 1px solid #A1A5B1;
+		border-radius: 50%;
+		width: 7px;
+		height: 7px;
+	}
+
+	/* @media (min-width: 769px) {
+	.popover .arrow::after, .popover .arrow::before{
+		border-style: none !important;
+	}
+	.popover-header {
+		color: green;
+		background-color: white !important;
+		border-bottom: none !important;
+		font-weight: bold !important;
+		font-size: 20px !important;
+	}
+	.popover-body {
+		font-size: 12px !important;
+		padding: .75rem !important;
+		padding-top: 0px !important;
+	}
+}
+ @media (max-width: 1024px) {
+	.tap-here {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		border: 1px solid rgba(100,100,100, .5);
+		background: #26ADE1;
+		padding: 0;
+		margin: 0;
+		animation: tapHere 2s infinite;
+	}
+	.tap-here :after {
+		box-sizing: border-box;
+		display: block;
+		content: '';
+		width: 80px;
+		height: 80px;
+		left: 10px;
+		top: 10px;
+		position: absolute;
+		border-radius: 50%;
+		border: 1px solid rgba(100,100,100, .35);
+		background: rgba(51, 50, 50, 0.35);
+	}
+
+	@keyframes tapHere {
+		0%   {transform: scale(0);}
+		15%  {transform: scale(1);}
+		30%  {transform: scale(0);}
+		100% {transform: scale(0);}
+	}
+}
+ */
+
+</style>
+<div class="overflow-hidden">
+<div class="container-fluid">
+  <div class="row">
+	 <div  class="col-12" style="padding:0;">
+	  <img class="timeline-desktop" src="grx_Timeline_desktop_annual.png" alt=""/>
+	</div>
+</div>
+</div>
+
+    <div class="timeline " style="background-color: rgba(0,0,0,0.1)">
+	<div class="container-fluid">
+	<div class="row">
+
+	<div class="col-12 col-md-3">
+      		<div class="row">
+				<div class="col-4 activepearl">
+					<a href="#self" class="jan tab-links">
+					JAN<img class="dotty" src="dot_hover_2x.png" width="14" height="14" alt=""/>
+					</a>
+				  </div>
+				<div class="col-4 pearl">
+				  <a href="#self" class="one tab-links">
+				  FEB<img class="dotty" src="dot_normal_2x.png" width="14" height="14" alt=""/>
+				  </a>
+				</div>
+				<div class="col-4 nopearl">
+				  MAR
+				</div>
+		  	</div>
+    </div>
+	<div class="col-12 col-md-3">
+   		<div class="row">
+		  <div class="col-4 pearl">
+				<a href="#self" class="two tab-links">
+				APR<img class="dotty" src="dot_normal_2x.png" width="14" height="14" alt=""/>
+			  	</a>
+		  </div>
+		  <div class="col-4 nopearl">
+				MAY
+		  </div>
+		  <div class="col-4 pearl">
+			<a href="#self" class="jun tab-links">
+			JUN<img class="dotty" src="dot_normal_2x.png" width="14" height="14" alt=""/>
+			  </a>
+	  		</div>
+		</div>
+    </div>
+	<div class="col-12 col-md-3">
+      	<div class="row">
+		  <div class="col-4 pearl">
+				<a href="#self" class="three tab-links">
+				JUL<img class="dotty" src="dot_normal_2x.png" width="14" height="14" alt=""/>
+				</a>
+		  </div>
+		  <div class="col-4 nopearl">
+				AUG
+		  </div>
+		  <div class="col-4 pearl">
+		  	     <a href="#self" class="four tab-links">
+				 SEP<img class="dotty" src="dot_normal_2x.png" width="14" height="14" alt=""/>
+		  		 </a>
+		  </div>
+	   </div>
+    </div>
+	<div class="col-12 col-md-3">
+       <div class="row">
+				<div class="col-4 nopearl">
+				  OCT
+				</div>
+				<div class="col-4 nopearl">
+				  NOV
+				</div>
+			    <div class="col-4 nopearl">
+				  DEC
+				</div>
+	    </div>
+      </div>
+
+  </div>
+  </div>
+	</div>
+
+<div class="mobile-select" style="width:100%; max-width:500px; margin:auto; text-align: center; padding:30px; padding-bottom:0px;">
+</div>
+
+<div class="container-lg overflow-hidden">
+
+  <div id="rowadj" class="row overflow-hidden">
+	  <div class="col-md-3" style="padding-bottom:15px;">
+			<div class="row">
+					<div class="container-fluid">
+					<div class="row persona">
+					<div class="col-6 col-xs-6 col-md-12 col-lg-12 persona-img-container">
+						<img src="icon_Anita@2x.png" class="persona-img" alt=""/>
+					</div>
+
+					<div class="col-6 col-xs-6 col-md-12 col-lg-12" style="max-width:180px; margin:auto;">
+						<hr style="border-color:#666666;" />
+						<div style="width:100%;"><h3>Anita</h3></div>
+						<hr style="border-color:#666666;" />
+						<ul style="padding-left:0px; margin-left:15px; font-size:13px;">
+							<li>Low Income</li>
+							<li style="padding-top:10px;">Highly Engaged Consumer</li>
+							<li style="padding-top:10px;">Looking for Tiered Rate</li>
+						</ul>
+					<hr style="border-color:#666666;" />
+
+
+					<div style="font-size:11px; color:#666666; padding:0; margin:0;">
+						<div style="text-align:left;">Interested in see how it works? </div>
+						<a href="/utilityai/customer-experience/email/send-sample/" target="_parent" style="text-decoration: underline !important; color:#0000FF; padding:0; margin:0;">
+							<button style="margin-top:15px; padding:5px 25px; background-color: inherit;border: 2px solid #000000;"> TEST IT OUT! </button>
+						</a>
+					</div>
+
+					</div>
+					</div>
+					</div>
+
+			</div>
+	  </div>
+    <div id="ajax-content" class="col-md-9 set-phone-content" style="min-height:100%; margin: 0 auto;">
+
+			<div id="contained-content"  style="width:100%; max-height:100%; min-height:100%; position:relative; margin:auto; text-align: center;">
+				<div style="top:0; bottom:0; left:0; right:0; margin:auto; text-align:center; position:relative;">
+					<img id="phone-frame" class="phone-layout" src="phone-frame_5x.png" alt=""/>
+					<img id="phone-frame" class="phone-layout" src="phone-LTE.png"
+					usemap="#phoneMap" alt="" style="display:none" >
+					<map name="phoneMap">
+						<area id="phone-area"  alt="vhdg" title="normal" onclick="testHidePopover();"
+						coords="10 30 500 200" shape="rect">
+					</map>
+				</div>
+				<!-- <div style="position:absolute; top:0; bottom:0; left:0; right:0; margin:auto; text-align:center;"></div> -->
+					<div id="loading">
+						<img src="icn-bidgely-loader.gif"/>
+					</div>
+					<div id="phone-content"></div>
+				</div>
+			</div>
+
+		</div>
+
+  </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" crossorigin="anonymous"></script>
+<!-- script for jquery mobile (Swipe) -->
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">$(document).bind("mobileinit", function(){$.extend(  $.mobile , {autoInitializePage: false, allowCrossDomainPages:true})});</script>
+<script type="text/javascript" src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.css">
+<!-- script for scroll plugin -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+<!-- script for popover and bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<!-- added self made js for bubble interaction -->
+
+<!-- Loading & Sizing -->
+<script>
+$(window).on("load", function() {
+	var visheight = $(window).innerHeight();
+	var visheightadj = visheight - 95;  // -95 from window to make a visible area
+
+	$('#phone-frame').css('height', visheightadj);
+	// make a height in percent from pixel
+	var visibleAreaHeight = (visheightadj * .97);
+	// remove -45 fixed and get contained-content(phoneFrame-height) in percentage
+	//.13 phone-content height is 13% from top
+	var containedHeight = ($('#contained-content').innerHeight() * .13 );
+	// total-phoneFrame-height - phone-content height and assign it to email-container
+	$("#email-container").css('height', visibleAreaHeight - containedHeight);
+	$('#rowadj').css('height', visheightadj);
+
+	// take frame-width
+	var imgwidth = $('#phone-frame').width();
+		if ($('.email-content') && $('.email-content')[0]) {
+			var imgSrc =  $('.email-content')[0].src;
+			if($('.email-content').data('route-name')) {
+				var routeName = $('.email-content').data('route-name');
+			}
+			if(imgSrc.indexOf("m-anita-jan") > 0 )  { // remove jun from that
+				imgwidth =  $('#phone-frame').width() - 45;
+			}
+		}
+
+		// remove fixed -45 and convert it in to percantage
+		// Frame width is 100% so make image visible 85% for email-content
+		var setImgContentWidth = (imgwidth * .8585);
+		$('.email-content').css('width', setImgContentWidth);
+		// adding 2 in email-content to show scroll-bar
+		$("#email-container").css('width', setImgContentWidth + 2 );
+});
+
+$(document).ajaxComplete(function(evt){
+		$(window).trigger('resize'); //trigging the window resize event forces images to load
+});
+
+$(window).resize(function() {
+	clearTimeout(window.resizedFinished);
+	window.resizedFinished = setTimeout(function(){
+
+		var visheight = $(window).innerHeight();
+		var visheightadj = visheight - 95;  // -95 from window to make a visible area
+
+		$('#phone-frame').css('height', visheightadj);
+		// make a height in percent from pixel
+		var visibleAreaHeight = (visheightadj * .97);
+		// remove -45 fixed and get contained-content(phoneFrame-height) in percentage
+		//.13 phone-content height is 13% from top
+		var containedHeight = ($('#contained-content').innerHeight() * .13 );
+		// total-phoneFrame-height - phone-content height and assign it to email-container
+		$("#email-container").css('height', visibleAreaHeight - containedHeight);
+		$('#rowadj').css('height', visheightadj);
+
+		// take frame-width
+		var imgwidth = $('#phone-frame').width();
+		if ($('.email-content') && $('.email-content')[0]) {
+			var imgSrc = $('.email-content')[0].src;
+			if($('.email-content').data('route-name')) {
+				var routeName = $('.email-content').data('route-name');
+			}
+			if(imgSrc.indexOf("m-anita-jan") > 0 )  { // remove jun from that
+				imgwidth =  $('#phone-frame').width() - 45;
+			}
+		}
+
+		// remove fixed -45 and convert it in to percantage
+		// Frame width is 100% so make image visible 85% for email-content
+		var setImgContentWidth = (imgwidth * .8585);
+		$('.email-content').css('width', setImgContentWidth);
+
+		// adding 2 in email-content to show scroll-bar
+		$("#email-container").css('width', setImgContentWidth + 2 );
+		triggerBubbleClick();
+		if(routeName) {   //// added for adding param /////////
+			var newurl = window.parent.location.pathname + '?journey=' + routeName;
+			window.parent.history.pushState({path:newurl},'',newurl);
+		}
+	}, 200);
+
+});
+</script>
+
+<script>
+//Load First Page
+
+var getQueryString = function ( field, url ) {
+	var href = url ? url : window.parent.location.href;
+	var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+	var string = reg.exec(href);
+	return string ? string[1] : null;
+};
+var param = getQueryString('journey');
+
+var mapActiveClassParam = {   /// checking active class name /////////
+	'anita-feb': '.one',
+	'anita-apr': '.two',
+	'anita-jul': '.three',
+	'anita-sep': '.four',
+	'anita-jan': '.jan',
+	'anita-jun': '.jun'
+}
+if(param) {
+	let loadHtml = param + '.html';
+	let setClass = mapActiveClassParam[param];
+	$('#phone-content').load(loadHtml);
+	$('.activepearl').addClass('pearl');
+	$('.activepearl').removeClass('activepearl');
+	$(setClass).parent().removeClass('pearl');
+	$(setClass).parent().addClass('activepearl');
+	$('.dotty').attr('src', 'dot_normal_2x.png');
+	$(setClass).children('img').attr('src', 'dot_hover_2x.png');
+} else {
+	$('#phone-content').load('anita-jan.html');
+}
+</script>
+
+<script>
+
+//Navi Naverton
+$(document).ready(function(){
+	$(".jan").click(function(){
+
+		$('#phone-content').load("anita-jan.html");
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.jan').parent().removeClass('pearl');
+		$('.jan').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.jan').children('img').attr('src', 'dot_hover_2x.png');
+
+	});
+});
+
+//Navi Naverton
+$(document).ready(function(){
+
+	$(".one").click(function(){
+
+		$('#phone-content').load("anita-feb.html");
+
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.one').parent().removeClass('pearl');
+		$('.one').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.one').children('img').attr('src', 'dot_hover_2x.png');
+
+	});
+});
+
+$(document).ready(function(){
+
+	$(".two").click(function(){
+
+	$('#phone-content').load("anita-apr.html");
+	$('.activepearl').addClass('pearl');
+	$('.activepearl').removeClass('activepearl');
+	$('.two').parent().removeClass('pearl');
+	$('.two').parent().addClass('activepearl');
+	$('.dotty').attr('src', 'dot_normal_2x.png');
+	$('.two').children('img').attr('src', 'dot_hover_2x.png');
+	});
+});
+
+
+</script>
+
+
+<script>
+
+$(document).ready(function(){
+	$(".jun").click(function(){
+
+		$('#phone-content').load("anita-jun.html");
+
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.jun').parent().removeClass('pearl');
+		$('.jun').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.jun').children('img').attr('src', 'dot_hover_2x.png');
+
+	});
+});
+$(document).ready(function(){
+
+	$(".three").click(function(){
+
+		$('#phone-content').load("anita-jul.html");
+
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.three').parent().removeClass('pearl');
+		$('.three').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.three').children('img').attr('src', 'dot_hover_2x.png');
+
+	});
+});
+
+$(document).ready(function(){
+
+	$(".four").click(function(){
+
+	$('#phone-content').load("anita-sep.html");
+	$('.activepearl').addClass('pearl');
+	$('.activepearl').removeClass('activepearl');
+	$('.four').parent().removeClass('pearl');
+	$('.four').parent().addClass('activepearl');
+	$('.dotty').attr('src', 'dot_normal_2x.png');
+	$('.four').children('img').attr('src', 'dot_hover_2x.png');
+
+	});
+});
+
+</script>
+
+<script>
+//Dropdown Navi Naverton
+	$('#sources').on('change', function() {
+		$('#phone-content').load(this.value);
+	});
+</script>
+
+<!-- script for bubble-code -->
+<script>
+
+	////// function popover placement for (web) /////////////
+function bubbleOpen(id) {
+	// when plugin is used need to split(,)
+	var emailContentWidth = $('.email-content').width(); //230
+	var emailContentHeight = $('.email-content').height(); //230
+  	var coordsStr = $('#bubble-area-'+id+' ').attr('original-coords');
+  	var coordsArr = coordsStr.split(",");
+	coordsArr[1] = parseInt(coordsArr[1]);  //top
+	updatePopoverPosition(id, coordsArr, emailContentWidth, emailContentHeight);
+}
+
+function updatePopoverPosition(id, coordsArr, emailContentWidth, emailContentHeight) {
+	var top = Math.round((parseInt(coordsArr[1]) * emailContentHeight) / 525);
+	var phoneContainerHeight = $('#phone-content').height();
+
+	coordsArr[0] = parseInt(coordsArr[0]);
+	// var left = Math.round((parseInt(emailContentWidth) / emailContentHeight) * coordsArr[0]);
+	// left += coordsArr[0];
+
+	var left = Math.round((parseInt(coordsArr[0]) * emailContentWidth) / 230);
+	coordsArr[2] = parseInt(coordsArr[2]);
+
+	// var right = Math.round((parseInt(emailContentWidth) / emailContentHeight) * coordsArr[2]);
+	// right += coordsArr[2];
+	var right = Math.round((parseInt(coordsArr[2]) * emailContentWidth) / 230);
+	let rightStart = -30;
+	if(emailContentHeight < phoneContainerHeight ) {
+		top += 30;
+		// rightStart += -30;
+	}
+
+	// if($(window).width() > 1024) {
+		if(parseInt(coordsArr[0]) < (emailContentWidth / 2)) {  //150
+			$('#bubble-popover-'+id).css({'left': '-185px', 'top': top +'px'});
+			$('#bubble-line-'+id).css({'left': '-17px', 'top':top+'px', 'width': left+'px'});
+			$('#bubble-line-'+id).addClass('bubble_left');
+			// $('#tap-here-'+id).css({'left': (left - 40) +'px', 'top':top +'px'});
+		} else {
+			$('#bubble-popover-'+id).css({'right': '5px', 'top':top +'px'});
+			$('#bubble-line-'+id).css({'right': rightStart + 'px', 'top':top +'px', 'width': right+'px'});
+			$('#bubble-line-'+id).addClass('bubble_right');
+			// $('#tap-here-'+id).css({'right':  (right - 50) +'px', 'top': (top-50) +'px'});
+		}
+		$('#bubble-area-' + id).css('display', 'inline');
+		$('#bubble-area-'+id+'[data-toggle="popover"]').popover().popover('show').off('click');
+	// } else {
+		//  $('#tap-here-'+id).css({'left': (left - 40) +'px', 'top':top +'px'});
+	// 	$('#bubble-popover-'+id).css('display', 'block');
+	// 	$('#bubble-area-'+id+'[data-toggle="popover"]').popover({placement: 'top'}).popover('show');
+	// }
+}
+
+//////// function works when user scroll image /////////////
+function scrollBubbleContent(el) {
+	// when plugin is used need to split(,)
+	console.log("bubbleContainer : " + bubbleContainer);
+	if(bubbleContainer) {
+
+		var temp = $('#email-content').siblings()[0];
+		var bubbleLength = $(temp).children().length;
+		var emailContentWidth = $('.email-content').width(); //230
+		var emailContentHeight = $('.email-content').height(); //230
+
+		for(let i = 1; i <= bubbleLength ; i++) {
+			// $('#bubble-area-'+i).on('click', function() { bubbleOpen(i); });
+			var coordsStr = $('#bubble-area-'+i).attr('original-coords');
+			var coordsArr = coordsStr.split(",");
+			var top = Math.round((parseInt(coordsArr[1]) * emailContentHeight) / 525);
+
+			var imageTop = top + el.mcs.top ;
+			// console.log("imageTop : " + imageTop);
+			if(imageTop <= 0) {
+				$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'none');
+			} else {
+				// console.log("else");
+				// $('#bubble-area-'+i+'[data-toggle="popover"]').popover().popover('show').off('click');
+				$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'block');
+				// $('#bubble-line-'+i+'').css('display', 'block');
+				// $('#bubble-area-'+i+'[data-toggle="popover"]').popover().popover('show');
+			}
+
+			if(!(imageTop <= 0)) {
+				$('#bubble-area-'+i).trigger( "click" );
+				$('#bubble-line-'+i).css('top', imageTop +'px');
+			}
+		}
+	}
+}
+
+function triggerBubbleClick() {
+	var temp = $('#email-content').siblings()[0];
+	var bubbleLength = $(temp).children().length;
+	// if($(window).width() > 1024) {
+			setTimeout(function(){
+			for(let i = 1; i <= bubbleLength ; i++) {
+				// $('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'block');
+				$('#bubble-area-'+i).trigger( "click" );
+			}
+		}, 300);
+	// } else {
+	// 	// for(let i = 1; i <= bubbleLength ; i++) {
+	// 	// 	$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'none');
+	// 	// 	}
+	// 	console.log($(window).width());
+	// }
+}
+
+$(window).on("load", function() {
+	triggerBubbleClick();
+});
+
+$(document).ready(function(){
+	triggerBubbleClick();
+});
+
+</script>
+
+<!-- script for Change phone frame journey -->
+<script>
+	var bubbleContainer = true;
+	function setNewFrame(temp) {
+		var visheight = $(window).innerHeight();
+		var visheightadj = visheight - 95;
+		$('#phone-frame').css('height', visheightadj);
+		var visibleAreaHeight = (visheightadj * .97);
+		var setHeightPercent = temp /100;
+		var containedHeight = ($('#contained-content').innerHeight() * setHeightPercent );
+		$("#email-container").css('height', visibleAreaHeight - containedHeight);
+		var imgwidth = $('#phone-frame').width();
+		var setImgContentWidth = (imgwidth * .85);
+		$('.email-content').css('width', setImgContentWidth);
+		$("#email-container").css('width', setImgContentWidth + 2 );
+	}
+	function testShowPopover() {
+		var temp = $('.phone-layout')[0];
+		var phoneHeight = $(temp).css('height');
+		$(temp).css('display', 'none');
+		var temp2 = $('.phone-layout')[1];
+		$(temp2).css('display', 'inline-block');;
+		$(temp2).css('height',phoneHeight );
+		var emailwidth = $('.email-content')[1];
+		var emailContent = $('.email-content')[0];
+		$(emailContent).css('display', 'none');
+		var temp = $('#email-content').siblings()[0];
+		var bubbleLength = $(temp).children().length;
+		for(let i = 1; i <= bubbleLength ; i++) {
+			$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'none');
+			// $('#bubble-line-'+i+'').css('display', 'none');
+			// $('#bubble-area-'+i+'[data-toggle="popover"]').popover().popover('hide');
+		}
+		var emailContent1 = $('.email-content')[1];
+		$(emailContent1).css('display', 'inline-block');
+		$('#phone-content').css('top' , '24%');
+		setNewFrame(24);
+		bubbleContainer = false;
+	}
+	function testHidePopover() {
+		var temp = $('.phone-layout')[1];
+		var phoneHeight = $(temp).css('height');
+		$(temp).css('display', 'none');
+		var temp2 = $('.phone-layout')[0];
+		$(temp2).css('display', 'inline-block');
+		$(temp2).css('height',phoneHeight );
+		var temp = $('#email-content').siblings()[0];
+		var bubbleLength = $(temp).children().length;
+		for(let i = 1; i <= bubbleLength ; i++) {
+			$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'block');
+			// $('#bubble-line-'+i+'').css('display', 'none');
+			// $('#bubble-area-'+i+'[data-toggle="popover"]').popover().popover('show');
+		}
+		var emailContent = $('.email-content')[1];
+		$(emailContent).css('display', 'none');
+		var emailContent1 = $('.email-content')[0];
+		$(emailContent1).css('display', 'inline-block');
+		$('#phone-content').css('top' , '13%');
+		setNewFrame(13);
+		bubbleContainer = true;
+
+	}
+</script>

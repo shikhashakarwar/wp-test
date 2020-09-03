@@ -1,0 +1,136 @@
+<!doctype html>
+<style>
+	.show-tap-image {
+		bottom: 50px;
+		display: block;
+		left: 58%;
+    max-width: 15px !important;
+    min-width: 60px !important;
+		position: fixed;
+	}
+	.scroll-container {overflow: auto; overflow-x: hidden;margin: 0 auto; border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px; }
+	@media (max-width: 767px) {
+		.show-tap-image {
+			left: 40%;
+			max-width: 20px !important;
+			min-width: 70px !important;
+		}
+		.mobile-touch { display: none !important;}
+		.scroll-container {display: none !important;}
+	}
+	.mCSB_inside > .mCSB_container {
+		margin-right: 0px!important;
+	}
+	.popover {
+    width: 140px;
+		border: none !important;
+    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.2);
+	}
+	.popover .arrow::after, .popover .arrow::before{
+		border-style: none !important;
+	}
+	.popover-header {
+		background-color: white !important;
+    border-bottom: none !important;
+		font-weight: bold !important;
+		font-size: 20px !important;
+	}
+	.popover-body {
+		font-size: 12px !important;
+		padding: .75rem !important;
+		padding-top: 0px !important;
+	}
+</style>
+<a href="#self" class="left-arrow mobile-touch">&nbsp;</a>
+	<div class="screenshots">
+		<div id="email-container" class="scroll-container">
+			<img data-route-name="anita-jun" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
+			src="w-anita-jun.jpg" usemap="#image_map" alt="email content"/>
+			<map name="image_map">
+				<area style="display: inline;" id="bubble-position-1"  alt="" title="$185" onclick='openPopover(1);'
+				data-container="#popover-1" data-toggle="popover"
+				data-placement="left" title="Popover Header" data-content="Accurate appliance disaggregation using patented technology"
+				coords="200,143,120,100" original-coords="200,143,120,100" shape="rect">
+			</map>
+		</div>
+	</div>
+	<div class="mobile-img-div" >
+		<img src="m-anita-jun.jpg" alt="" />
+	</div>
+	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
+
+	<div id="popover-1" style="position: absolute;"> </div>
+	<div id="popover-bubble-line-1" style="border: 1px solid #A1A5B1; transform: rotate(-164.83deg); position:absolute;"> </div>
+
+	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;" ></div>
+
+<a href="#self" class="right-arrow mobile-touch">&nbsp;</a>
+
+<script>
+//Navi Naverton
+$(document).ready(function() {
+	setTimeout(function(){
+		$('.show-tap-image').css("display", "none");
+	}, 3000);
+
+	$('#email-content').on('dragstart', function(event) { event.preventDefault(); });
+
+	$("#email-container").fadeIn(1000);
+
+	$('.scroll-container').mCustomScrollbar({
+		theme:"dark",
+		scrollbarPosition:"inside",
+		callbacks:{
+			whileScrolling:function() {
+				scrollBubbleContent(this);
+			}
+		}
+	});
+
+	function leftArrowContent() {
+		$('#phone-content').load("anita-apr.html");
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.two').parent().removeClass('pearl');
+		$('.two').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.two').children('img').attr('src', 'dot_hover_2x.png');
+	}
+
+	function rightArrowContent() {
+		$('#phone-content').load("anita-jul.html");
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.three').parent().removeClass('pearl');
+		$('.three').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.three').children('img').attr('src', 'dot_hover_2x.png');
+	}
+
+	$(".left-arrow").click(function(){
+		leftArrowContent();
+	});
+
+	$(".right-arrow").click(function(){
+		rightArrowContent();
+	});
+
+	$(".mobile-img-div, .email-content").on("swipeleft", function(e) {
+		e.preventDefault();
+		rightArrowContent();
+	});
+
+	$(".mobile-img-div, .email-content").on("swiperight", function(e) {
+		e.preventDefault();
+		leftArrowContent();
+	});
+
+});
+</script>
+
+<script>
+	$('#sources').on('change', function() {
+		$('#phone-content').load(this.value);
+	});
+</script>
