@@ -36,33 +36,34 @@
     border-bottom: none !important;
 		font-weight: bold !important;
 		font-size: 20px !important;
+		padding-bottom: 0px !important;
 	}
 	.popover-body {
 		font-size: 12px !important;
 		padding: .75rem !important;
-		padding-top: 0px !important;
 	}
 </style>
 <a href="#self" class="left-arrow mobile-touch">&nbsp;</a>
 	<div class="screenshots">
 		<div id="email-container" class="scroll-container">
-			<img data-route-name="anita-sep" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
+			<img data-route-name="anita-sep" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; margin:auto;"
 			 src="w-anita4.png"usemap="#image_map" alt="email content"/>
 			 <map name="image_map">
 				 <area style="display: inline;" id="bubble-position-1"  alt="" title="50%" onclick='openPopover(1);'
 				 data-container="#popover-1" data-toggle="popover"
 				 data-placement="left" title="Popover Header" data-content="Daily updated insights scored for relevance"
-				 coords="200,153,150,100" original-coords="200,153,150,100" shape="rect">
+				 coords="200,123,155,100" original-coords="200,123,155,100" shape="rect">
 
-				 <area style="display: inline;" id="bubble-position-2" title="Explore" alt="" onclick='openPopover(2);'
+				 <area id="bubble-position-2" style="display: inline;" title="" alt="" onclick='openPopover(2);'
 				 data-container="#popover-2" data-toggle="popover"
 				 data-placement="left"
 				 data-content="<div><a class='popup'>Click here </a></div>"
 				 data-html="true"
-				 coords="50,250,100,100" original-coords="50,250,100,100" shape="rect">
+				 coords="50,255,400,355" original-coords="50,250,400,355" shape="rect">
+
 			 </map>
 
-			 <img class="email-content" style="display:none; z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
+			 <img class="email-content" style="display:none; z-index:-1 !important; width:0px; margin:auto;"
 			 src="m-Energy_Insights-UsageBar-Year-Anita-SEP.png" alt="email content"/>
 		 </div>
 		</div>
@@ -73,10 +74,10 @@
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
 
 	<div id="popover-1" style="position: absolute;display:inline"> </div>
-	<div id="popover-bubble-line-1" style="border: 1px solid #A1A5B1; transform: rotate(-164.83deg); position:absolute;"> </div>
+	<div id="popover-bubble-line-1" class="bubble-line" style="position:absolute;"> </div>
 
 	<div id="popover-2" style="position: absolute;display:inline"> </div>
-	<div id="popover-bubble-line-2" style="border: 1px solid #A1A5B1; transform: rotate(-164.83deg); position:absolute;"> </div>
+	<div id="popover-bubble-line-2" class="bubble-line" style="position:absolute;"> </div>
 
 	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;" ></div>
 	<div id="mobile-bubble-tap-2" class="mobile-bubble-tap" style="position: absolute;" ></div>
@@ -91,7 +92,7 @@ $(document).ready(function(){
 	}, 3000);
 
 	$(document).on("click", ".popup", function() {
-		testShowPopover();
+		setBacktoMailPhoneFrame();
 	});
 
 	$('#email-content').on('dragstart', function(event) { event.preventDefault(); });
@@ -134,13 +135,11 @@ $(document).ready(function(){
 
 	$(".mobile-img-div, .email-content").on("swipeleft", function(e) {
 		e.preventDefault();
-		testHidePopover();
 		rightArrowContent();
 	});
 
 	$(".mobile-img-div, .email-content").on("swiperight", function(e) {
 		e.preventDefault();
-		testHidePopover();
 		leftArrowContent();
 	});
 

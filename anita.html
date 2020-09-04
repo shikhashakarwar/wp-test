@@ -166,7 +166,7 @@
 		z-index: -100;
 	}
 
-	.bubble_left:before {
+	.bubble-left:before {
 		position: absolute;
 		left: -8px;
 		bottom: -4px;
@@ -178,7 +178,7 @@
 		height: 7px;
 	}
 
-	.bubble_right:before {
+	.bubble-right:before {
 		position: absolute;
 		right: -8px;
 		bottom: -4px;
@@ -188,6 +188,11 @@
 		border-radius: 50%;
 		width: 7px;
 		height: 7px;
+	}
+
+	.bubble-line {
+		border: 1px solid #E4E6E9;
+		transform: rotate(-164.83deg);
 	}
 
 	/* @media (min-width: 769px) {
@@ -208,7 +213,7 @@
 	}
 }
  @media (max-width: 1024px) {
-	.tap-here {
+	.mobile-bubble-tap {
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
@@ -218,7 +223,7 @@
 		margin: 0;
 		animation: tapHere 2s infinite;
 	}
-	.tap-here :after {
+	.mobile-bubble-tap :after {
 		box-sizing: border-box;
 		display: block;
 		content: '';
@@ -238,8 +243,7 @@
 		30%  {transform: scale(0);}
 		100% {transform: scale(0);}
 	}
-}
- */
+} */
 
 </style>
 <div class="overflow-hidden">
@@ -371,7 +375,7 @@
 					<img id="phone-frame" class="phone-layout" src="phone-LTE.png"
 					usemap="#phoneMap" alt="" style="display:none" >
 					<map name="phoneMap">
-						<area id="phone-area"  alt="vhdg" title="normal" onclick="testHidePopover();"
+						<area id="phone-area"  alt="vhdg" title="normal" onclick="setInboxPhoneFrame();"
 						coords="10 30 500 200" shape="rect">
 					</map>
 				</div>
@@ -482,7 +486,12 @@ $(window).resize(function() {
 
 		// adding 2 in email-content to show scroll-bar
 		$("#email-container").css('width', setImgContentWidth + 2 );
-		triggerBubbleClick();
+
+		triggerOpenPopovers();
+		if(!showPopover) {
+			setInboxPhoneFrame();
+		}
+
 		if(routeName) {   //// added for adding param /////////
 			var newurl = window.parent.location.pathname + '?journey=' + routeName;
 			window.parent.history.pushState({path:newurl},'',newurl);
@@ -527,9 +536,9 @@ if(param) {
 </script>
 
 <script>
-
 //Navi Naverton
 $(document).ready(function(){
+
 	$(".jan").click(function(){
 
 		$('#phone-content').load("anita-jan.html");
@@ -541,15 +550,10 @@ $(document).ready(function(){
 		$('.jan').children('img').attr('src', 'dot_hover_2x.png');
 
 	});
-});
-
-//Navi Naverton
-$(document).ready(function(){
 
 	$(".one").click(function(){
 
 		$('#phone-content').load("anita-feb.html");
-
 		$('.activepearl').addClass('pearl');
 		$('.activepearl').removeClass('activepearl');
 		$('.one').parent().removeClass('pearl');
@@ -558,33 +562,21 @@ $(document).ready(function(){
 		$('.one').children('img').attr('src', 'dot_hover_2x.png');
 
 	});
-});
-
-$(document).ready(function(){
 
 	$(".two").click(function(){
 
-	$('#phone-content').load("anita-apr.html");
-	$('.activepearl').addClass('pearl');
-	$('.activepearl').removeClass('activepearl');
-	$('.two').parent().removeClass('pearl');
-	$('.two').parent().addClass('activepearl');
-	$('.dotty').attr('src', 'dot_normal_2x.png');
-	$('.two').children('img').attr('src', 'dot_hover_2x.png');
+		$('#phone-content').load("anita-apr.html");
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.two').parent().removeClass('pearl');
+		$('.two').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.two').children('img').attr('src', 'dot_hover_2x.png');
 	});
-});
 
-
-</script>
-
-
-<script>
-
-$(document).ready(function(){
 	$(".jun").click(function(){
 
 		$('#phone-content').load("anita-jun.html");
-
 		$('.activepearl').addClass('pearl');
 		$('.activepearl').removeClass('activepearl');
 		$('.jun').parent().removeClass('pearl');
@@ -593,13 +585,10 @@ $(document).ready(function(){
 		$('.jun').children('img').attr('src', 'dot_hover_2x.png');
 
 	});
-});
-$(document).ready(function(){
 
 	$(".three").click(function(){
 
 		$('#phone-content').load("anita-jul.html");
-
 		$('.activepearl').addClass('pearl');
 		$('.activepearl').removeClass('activepearl');
 		$('.three').parent().removeClass('pearl');
@@ -608,19 +597,16 @@ $(document).ready(function(){
 		$('.three').children('img').attr('src', 'dot_hover_2x.png');
 
 	});
-});
-
-$(document).ready(function(){
 
 	$(".four").click(function(){
 
-	$('#phone-content').load("anita-sep.html");
-	$('.activepearl').addClass('pearl');
-	$('.activepearl').removeClass('activepearl');
-	$('.four').parent().removeClass('pearl');
-	$('.four').parent().addClass('activepearl');
-	$('.dotty').attr('src', 'dot_normal_2x.png');
-	$('.four').children('img').attr('src', 'dot_hover_2x.png');
+		$('#phone-content').load("anita-sep.html");
+		$('.activepearl').addClass('pearl');
+		$('.activepearl').removeClass('activepearl');
+		$('.four').parent().removeClass('pearl');
+		$('.four').parent().addClass('activepearl');
+		$('.dotty').attr('src', 'dot_normal_2x.png');
+		$('.four').children('img').attr('src', 'dot_hover_2x.png');
 
 	});
 });
@@ -636,127 +622,124 @@ $(document).ready(function(){
 
 <!-- script for bubble-code -->
 <script>
+var showPopover = true;
+////// function popover placement for (web) /////////////
 
-	////// function popover placement for (web) /////////////
-function bubbleOpen(id) {
-	// when plugin is used need to split(,)
+function getAreaTagLength() {
+	var areaTag = $('#email-content').siblings() ? $('#email-content').siblings()[0] : null; // to get how many coords are defined
+	var areaTagLength = $(areaTag).children().length;
+	return areaTagLength;
+}
+
+function UpdatePopoverView(str) {
+	var areaTagLength = getAreaTagLength();
+	for(let i = 1; i <= areaTagLength ; i++) {
+		$('#popover-bubble-line-'+i+', #popover-'+i+'').css('display', str);
+	}
+}
+
+function getCoords(id) {
+	var coordsStr = $('#bubble-position-'+id+' ').attr('original-coords');
+	var coordsArr = coordsStr.split(",");
+	return coordsArr;
+}
+
+function getEmailContentHW() {
 	var emailContentWidth = $('.email-content').width(); //230
 	var emailContentHeight = $('.email-content').height(); //230
-  	var coordsStr = $('#bubble-area-'+id+' ').attr('original-coords');
-  	var coordsArr = coordsStr.split(",");
+	return { 'height' : emailContentHeight, 'width': emailContentWidth }
+}
+
+function openPopover(id) {
+	// Coords are set for 230, 525 screen size.
+	var emailContent = getEmailContentHW();
+	var coordsArr = getCoords(id);
 	coordsArr[1] = parseInt(coordsArr[1]);  //top
-	updatePopoverPosition(id, coordsArr, emailContentWidth, emailContentHeight);
+	updatePopoverPosition(id, coordsArr, emailContent.width, emailContent.height);
+}
+
+function getPopoverPosition(coordsArr, emailContentWidth, emailContentHeight) {
+	var top = Math.round((parseInt(coordsArr[1]) * emailContentHeight) / 525);
+
+	coordsArr[0] = parseInt(coordsArr[0]);
+	var left = Math.round((parseInt(coordsArr[0]) * emailContentWidth) / 230);
+	// left += coordsArr[0];         // commented for test on others jounery
+
+	coordsArr[2] = parseInt(coordsArr[2]);
+	var right = Math.round((parseInt(coordsArr[2]) * emailContentWidth) / 230);
+
+	return { 'top': top, "left": left, "right": right}
 }
 
 function updatePopoverPosition(id, coordsArr, emailContentWidth, emailContentHeight) {
-	var top = Math.round((parseInt(coordsArr[1]) * emailContentHeight) / 525);
 	var phoneContainerHeight = $('#phone-content').height();
+	var position = getPopoverPosition(coordsArr, emailContentWidth, emailContentHeight);
 
-	coordsArr[0] = parseInt(coordsArr[0]);
-	// var left = Math.round((parseInt(emailContentWidth) / emailContentHeight) * coordsArr[0]);
-	// left += coordsArr[0];
-
-	var left = Math.round((parseInt(coordsArr[0]) * emailContentWidth) / 230);
-	coordsArr[2] = parseInt(coordsArr[2]);
-
-	// var right = Math.round((parseInt(emailContentWidth) / emailContentHeight) * coordsArr[2]);
-	// right += coordsArr[2];
-	var right = Math.round((parseInt(coordsArr[2]) * emailContentWidth) / 230);
-	let rightStart = -30;
 	if(emailContentHeight < phoneContainerHeight ) {
-		top += 30;
-		// rightStart += -30;
+		position.top += 30;
 	}
 
 	// if($(window).width() > 1024) {
 		if(parseInt(coordsArr[0]) < (emailContentWidth / 2)) {  //150
-			$('#bubble-popover-'+id).css({'left': '-185px', 'top': top +'px'});
-			$('#bubble-line-'+id).css({'left': '-17px', 'top':top+'px', 'width': left+'px'});
-			$('#bubble-line-'+id).addClass('bubble_left');
-			// $('#tap-here-'+id).css({'left': (left - 40) +'px', 'top':top +'px'});
+			$('#popover-'+id).css({'left': '-185px', 'top': position.top +'px'});
+			$('#popover-bubble-line-'+id).css({'left': '-17px', 'top': position.top+'px', 'width': position.left+'px'});  //-17px
+			$('#popover-bubble-line-'+id).addClass('bubble-left');
+			// $('#mobile-bubble-tap-'+id).css({'left': (left - 40) +'px', 'top':top +'px'});
 		} else {
-			$('#bubble-popover-'+id).css({'right': '5px', 'top':top +'px'});
-			$('#bubble-line-'+id).css({'right': rightStart + 'px', 'top':top +'px', 'width': right+'px'});
-			$('#bubble-line-'+id).addClass('bubble_right');
-			// $('#tap-here-'+id).css({'right':  (right - 50) +'px', 'top': (top-50) +'px'});
+			$('#popover-'+id).css({'right': '18px', 'top': position.top +'px'});
+			$('#popover-bubble-line-'+id).css({'right': '-20px', 'top':position.top +'px', 'width': position.right+'px'});
+			$('#popover-bubble-line-'+id).addClass('bubble-right');
+			$('#popover-bubble-line-'+id).css('transform', 'rotate(-187.83deg)' );
+			// $('#mobile-bubble-tap-'+id).css({'right':  (right - 50) +'px', 'top': (top-50) +'px'});
 		}
-		$('#bubble-area-' + id).css('display', 'inline');
-		$('#bubble-area-'+id+'[data-toggle="popover"]').popover().popover('show').off('click');
-	// } else {
-		//  $('#tap-here-'+id).css({'left': (left - 40) +'px', 'top':top +'px'});
-	// 	$('#bubble-popover-'+id).css('display', 'block');
-	// 	$('#bubble-area-'+id+'[data-toggle="popover"]').popover({placement: 'top'}).popover('show');
+		$('#bubble-position-' + id).css('display', 'inline');
+		$('#bubble-position-'+id+'[data-toggle="popover"]').popover().popover('show').off('click');
 	// }
 }
 
 //////// function works when user scroll image /////////////
 function scrollBubbleContent(el) {
-	// when plugin is used need to split(,)
-	console.log("bubbleContainer : " + bubbleContainer);
-	if(bubbleContainer) {
+	if(showPopover) {
 
-		var temp = $('#email-content').siblings()[0];
-		var bubbleLength = $(temp).children().length;
-		var emailContentWidth = $('.email-content').width(); //230
-		var emailContentHeight = $('.email-content').height(); //230
+		var bubbleLength = getAreaTagLength();
+		var emailContent = getEmailContentHW();
 
 		for(let i = 1; i <= bubbleLength ; i++) {
-			// $('#bubble-area-'+i).on('click', function() { bubbleOpen(i); });
-			var coordsStr = $('#bubble-area-'+i).attr('original-coords');
-			var coordsArr = coordsStr.split(",");
-			var top = Math.round((parseInt(coordsArr[1]) * emailContentHeight) / 525);
+			var coordsArr = getCoords(i);
+			var position = getPopoverPosition(coordsArr, emailContent.width, emailContent.height);
+			var imageTop = position.top + el.mcs.top ;
 
-			var imageTop = top + el.mcs.top ;
-			// console.log("imageTop : " + imageTop);
 			if(imageTop <= 0) {
-				$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'none');
+				$('#popover-bubble-line-'+i+', #popover-'+i+'').css('display', 'none');
 			} else {
-				// console.log("else");
-				// $('#bubble-area-'+i+'[data-toggle="popover"]').popover().popover('show').off('click');
-				$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'block');
-				// $('#bubble-line-'+i+'').css('display', 'block');
-				// $('#bubble-area-'+i+'[data-toggle="popover"]').popover().popover('show');
+				$('#popover-bubble-line-'+i+', #popover-'+i+'').css('display', 'block');
 			}
 
 			if(!(imageTop <= 0)) {
-				$('#bubble-area-'+i).trigger( "click" );
-				$('#bubble-line-'+i).css('top', imageTop +'px');
+				$('#bubble-position-'+i).trigger( "click" );
+				$('#popover-bubble-line-'+i).css('top', imageTop +'px');
 			}
 		}
 	}
 }
 
-function triggerBubbleClick() {
-	var temp = $('#email-content').siblings()[0];
-	var bubbleLength = $(temp).children().length;
-	// if($(window).width() > 1024) {
-			setTimeout(function(){
-			for(let i = 1; i <= bubbleLength ; i++) {
-				// $('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'block');
-				$('#bubble-area-'+i).trigger( "click" );
-			}
-		}, 300);
-	// } else {
-	// 	// for(let i = 1; i <= bubbleLength ; i++) {
-	// 	// 	$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'none');
-	// 	// 	}
-	// 	console.log($(window).width());
-	// }
+function triggerOpenPopovers() {
+	var areaTagLength = getAreaTagLength();
+	setTimeout(function(){
+		for(let i = 1; i <= areaTagLength ; i++) {
+			$('#bubble-position-'+i).trigger( "click", {triggerByJS: true});
+		}
+	}, 300);
 }
 
 $(window).on("load", function() {
-	triggerBubbleClick();
+	triggerOpenPopovers();
 });
 
 $(document).ready(function(){
-	triggerBubbleClick();
+	triggerOpenPopovers();
 });
 
-</script>
-
-<!-- script for Change phone frame journey -->
-<script>
-	var bubbleContainer = true;
 	function setNewFrame(temp) {
 		var visheight = $(window).innerHeight();
 		var visheightadj = visheight - 95;
@@ -770,50 +753,48 @@ $(document).ready(function(){
 		$('.email-content').css('width', setImgContentWidth);
 		$("#email-container").css('width', setImgContentWidth + 2 );
 	}
-	function testShowPopover() {
-		var temp = $('.phone-layout')[0];
-		var phoneHeight = $(temp).css('height');
-		$(temp).css('display', 'none');
-		var temp2 = $('.phone-layout')[1];
-		$(temp2).css('display', 'inline-block');;
-		$(temp2).css('height',phoneHeight );
-		var emailwidth = $('.email-content')[1];
-		var emailContent = $('.email-content')[0];
-		$(emailContent).css('display', 'none');
-		var temp = $('#email-content').siblings()[0];
-		var bubbleLength = $(temp).children().length;
-		for(let i = 1; i <= bubbleLength ; i++) {
-			$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'none');
-			// $('#bubble-line-'+i+'').css('display', 'none');
-			// $('#bubble-area-'+i+'[data-toggle="popover"]').popover().popover('hide');
-		}
-		var emailContent1 = $('.email-content')[1];
-		$(emailContent1).css('display', 'inline-block');
-		$('#phone-content').css('top' , '24%');
-		setNewFrame(24);
-		bubbleContainer = false;
-	}
-	function testHidePopover() {
-		var temp = $('.phone-layout')[1];
-		var phoneHeight = $(temp).css('height');
-		$(temp).css('display', 'none');
-		var temp2 = $('.phone-layout')[0];
-		$(temp2).css('display', 'inline-block');
-		$(temp2).css('height',phoneHeight );
-		var temp = $('#email-content').siblings()[0];
-		var bubbleLength = $(temp).children().length;
-		for(let i = 1; i <= bubbleLength ; i++) {
-			$('#bubble-line-'+i+', #bubble-popover-'+i+'').css('display', 'block');
-			// $('#bubble-line-'+i+'').css('display', 'none');
-			// $('#bubble-area-'+i+'[data-toggle="popover"]').popover().popover('show');
-		}
-		var emailContent = $('.email-content')[1];
-		$(emailContent).css('display', 'none');
-		var emailContent1 = $('.email-content')[0];
-		$(emailContent1).css('display', 'inline-block');
-		$('#phone-content').css('top' , '13%');
-		setNewFrame(13);
-		bubbleContainer = true;
 
+	function setBacktoMailPhoneFrame() {
+		// on [0] poisition we get inbox frame and on [1] we get backToMail frame same for email
+		// we use hide and show concept because on load & resize  phone poistion is set acc. to screenSize
+		var inboxPhoneFrame = $('.phone-layout')[0];
+		var phoneHeight = $(inboxPhoneFrame).css('height');
+		$(inboxPhoneFrame).css('display', 'none');
+
+		var backMailPhoneFrame = $('.phone-layout')[1];
+		$(backMailPhoneFrame).css('display', 'inline-block');
+		$(backMailPhoneFrame).css('height',phoneHeight );
+
+		var inboxEmailContent = $('.email-content')[0];
+		$(inboxEmailContent).css('display', 'none');
+		UpdatePopoverView('none');
+
+		var backEmailContent = $('.email-content')[1];
+		$(backEmailContent).css('display', 'inline-block');
+
+		$('#phone-content').css('top' , '24%');  // when we show backToMail phone frame
+		setNewFrame(24);
+		showPopover = false;
+	}
+
+	function setInboxPhoneFrame() {
+		var backMailPhoneFrame = $('.phone-layout')[1];
+		var phoneHeight = $(backMailPhoneFrame).css('height');
+		$(backMailPhoneFrame).css('display', 'none');
+
+		var inboxPhoneFrame = $('.phone-layout')[0];
+		$(inboxPhoneFrame).css('display', 'inline-block');
+		$(inboxPhoneFrame).css('height',phoneHeight );
+
+		UpdatePopoverView('block');
+		var backEmailContent = $('.email-content')[1];
+		$(backEmailContent).css('display', 'none');
+
+		var inboxEmailContent = $('.email-content')[0];
+		$(inboxEmailContent).css('display', 'inline-block');
+
+		$('#phone-content').css('top' , '13%'); // when we show inbox phone frame
+		setNewFrame(13);
+		showPopover = true;
 	}
 </script>

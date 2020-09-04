@@ -34,11 +34,11 @@
 		background-color: white !important;
     border-bottom: none !important;
 		font-size: 20px !important;
+		padding-bottom: 0px !important;
 	}
 	.popover-body {
 		font-size: 12px !important;
 		padding: .75rem !important;
-		padding-top: 0px !important;
 	}
 
 	#popover-1 h3.popover-header {
@@ -59,14 +59,15 @@
 				<area style="display: inline;" id="bubble-position-2" alt="" title="$80" onclick='openPopover(2);'
 				data-container="#popover-2" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Adaptive budget for each bill cycle based on your annual usage trend"
-				coords="240,140,145,100" original-coords="240,140,145,100" shape="rect">
+				coords="240,145,145,100" original-coords="240,145,145,100" shape="rect">
 
-				<area style="display: inline;" id="bubble-position-3" title="Smart budget" alt="" onclick='openPopover(3);'
+				<!-- 240,140,145,100 -->
+				<area style="display: inline;" id="bubble-position-3" title="" alt="" onclick='openPopover(3);'
 				data-container="#popover-3" data-toggle="popover"
 				data-placement="left"
 				data-content="<div><a class='popup'>Click here </a></div>"
 				data-html="true"
-				coords="50,265,100,100" original-coords="50,265,100,100" shape="rect">
+				coords="50,265,400,365" original-coords="50,265,400,365" shape="rect">
 			</map>
 
 			<img class="email-content" style="display:none; z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
@@ -78,13 +79,13 @@
 	</div>
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
 	<div id="popover-1" style="position: absolute;"></div>
-	<div id="popover-bubble-line-1" style="border: 1px solid #A1A5B1; transform: rotate(-164.83deg); position:absolute;"> </div>
+	<div id="popover-bubble-line-1" class="bubble-line" style="position:absolute;"> </div>
 
 	<div id="popover-2" style="position: absolute;"> </div>
-	<div id="popover-bubble-line-2" style="border: 1px solid #A1A5B1; transform: rotate(-193.83deg); position:absolute;"> </div>
+	<div id="popover-bubble-line-2" class="bubble-line" style="position:absolute;"> </div>
 
 	<div id="popover-3" style="position: absolute;"> </div>
-	<div id="popover-bubble-line-3" style="border: 1px solid #A1A5B1; transform: rotate(-164.83deg); position:absolute;"> </div>
+	<div id="popover-bubble-line-3" class="bubble-line" style="position:absolute;"> </div>
 
 	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;" ></div>
 	<div id="mobile-bubble-tap-2" class="mobile-bubble-tap" style="position: absolute;" ></div>
@@ -101,7 +102,7 @@ $(document).ready(function(){
 	}, 3000);
 
 	$(document).on("click", ".popup", function() {
-		testShowPopover();
+		setBacktoMailPhoneFrame();
 	});
 
 	$('#email-content').on('dragstart', function(event) { event.preventDefault(); });
@@ -148,13 +149,11 @@ $(document).ready(function(){
 
 	$(".mobile-img-div, .email-content").on("swipeleft", function(e) {
 		e.preventDefault();
-		testHidePopover();
 		rightArrowContent();
 	});
 
 	$(".mobile-img-div, .email-content").on("swiperight", function(e) {
 		e.preventDefault();
-		testHidePopover();
 		leftArrowContent();
 	});
 
