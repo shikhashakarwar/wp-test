@@ -22,14 +22,6 @@
 	.mCSB_inside > .mCSB_container {
 		margin-right: 0px!important;
 	}
-	.popover {
-    width: 140px;
-		border: none !important;
-    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.2);
-	}
-	.popover .arrow::after, .popover .arrow::before{
-		border-style: none !important;
-	}
 	.popover-header {
 		color: green;
 		background-color: white !important;
@@ -38,17 +30,13 @@
 		font-size: 20px !important;
 		padding-bottom: 0px !important;
 	}
-	.popover-body {
-		font-size: 12px !important;
-		padding: .75rem !important;
-	}
 </style>
 <a href="#self" class="left-arrow mobile-touch">&nbsp;</a>
 	<div class="screenshots">
 		<div id="email-container" class="scroll-container" >
 			<img data-route-name="anita-jul" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
-			src="w-anita3.png" usemap="#image_map" alt="email content"/>
-			<map name="image_map">
+			src="w-anita3.png" usemap="#image-map" alt="email content"/>
+			<map name="imag-map">
 				<area style="display: inline;" id="bubble-position-1"  alt="" title="$72" onclick='openPopover(1);'
 				data-container="#popover-1" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Accurate bill projection using deep learning networks"
@@ -63,11 +51,24 @@
 			</map>
 
 			<img class="email-content" style="display:none; z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
-			src="Energy_Insights-Anita-JUL.png" alt="email content"/>
+			src="m-energy-insights-Anita-jul.png" alt="email content"/>
 		</div>
 	</div>
-	<div class="mobile-img-div">
-		<img src="m-anita3.png" alt="" />
+	<div class="mobile-img-div" style="position:relative">
+		<img class="email-mobile" src="m-anita3.png" alt="" />
+		<div class="email-mobile" style="display:none;">
+			<img class="mobile-back" src="backToMail-mobile.png" onclick="setInboxPhoneFrame();" alt="" />
+			<img src="m-energy-insights-Anita-jul.png" alt="" />
+		</div>
+
+		<div id="mobile-bubble-1" class="mobile-bubble-tap" style="position: absolute;top: 32%;left: 75%;"
+			data-container="body" data-toggle="popover" data-placement="bottom" title="$72"
+			data-content="Accurate bill projection using deep learning networks">
+		</div>
+		<div id="mobile-bubble-2" class="mobile-bubble-tap" style="position: absolute;top: 46%;left: 40%;"
+			data-container="body" data-toggle="popover" data-placement="bottom" data-content="<div><a class='popup'>Click here </a></div>"
+			data-html="true">
+		</div>
 	</div>
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
 

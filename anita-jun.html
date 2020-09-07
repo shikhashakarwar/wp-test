@@ -22,14 +22,6 @@
 	.mCSB_inside > .mCSB_container {
 		margin-right: 0px!important;
 	}
-	.popover {
-    width: 140px;
-		border: none !important;
-    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.2);
-	}
-	.popover .arrow::after, .popover .arrow::before{
-		border-style: none !important;
-	}
 	.popover-header {
 		background-color: white !important;
     border-bottom: none !important;
@@ -37,17 +29,13 @@
 		font-size: 20px !important;
 		padding-bottom: 0px !important;
 	}
-	.popover-body {
-		font-size: 12px !important;
-		padding: .75rem !important;
-	}
 </style>
 <a href="#self" class="left-arrow mobile-touch">&nbsp;</a>
 	<div class="screenshots">
 		<div id="email-container" class="scroll-container">
 			<img data-route-name="anita-jun" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
-			src="w-anita-jun.jpg" usemap="#image_map" alt="email content"/>
-			<map name="image_map">
+			src="w-anita-jun.jpg" usemap="#image-map" alt="email content"/>
+			<map name="imag-map">
 				<area style="display: inline;" id="bubble-position-1"  alt="" title="$185" onclick='openPopover(1);'
 				data-container="#popover-1" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Accurate appliance disaggregation using patented technology"
@@ -55,9 +43,14 @@
 			</map>
 		</div>
 	</div>
-	<div class="mobile-img-div" >
+	<div class="mobile-img-div" style="position:relative">
 		<img src="m-anita-jun.jpg" alt="" />
+		<div id="mobile-bubble-1" class="mobile-bubble-tap" style="position: absolute;top: 30%;left: 56%;"
+		data-container="body" data-toggle="popover" data-placement="bottom" title="$185"
+		data-content="Accurate appliance disaggregation using patented technology">
 	</div>
+	</div>
+
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
 
 	<div id="popover-1" style="position: absolute;"> </div>

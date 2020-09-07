@@ -22,14 +22,6 @@
 	.mCSB_inside > .mCSB_container {
 		margin-right: 0px!important;
 	}
-	.popover {
-    width: 140px;
-		border: none !important;
-    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.2);
-	}
-	.popover .arrow::after, .popover .arrow::before{
-		border-style: none !important;
-	}
 	.popover-header {
 		color: green;
 		background-color: white !important;
@@ -38,34 +30,34 @@
 		font-size: 20px !important;
 		padding-bottom: 0px !important;
 	}
-	.popover-body {
-		font-size: 12px !important;
-		padding: .75rem !important;
-	}
 </style>
 <a href="#self" class="left-arrow mobile-touch">&nbsp;</a>
 	<div class="screenshots">
 		<div id="email-container" class="scroll-container" >
 			<img data-route-name="anita-feb" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
-			src="w-anita1.png" usemap="#image_map" alt="email content"/>
-			<map name="image_map">
+			src="w-anita1.png" usemap="#image-map" alt="email content"/>
+			<map name="imag-map">
 				<area style="display: inline;" id="bubble-position-1"  alt="" title="normal" onclick='openPopover(1);'
 				data-container="#popover-1" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Smart self comparison accounts for changes in weather conditions and number of days in bill cycle"
-				coords="100,158,100,100" original-coords="100,158,100,100" shape="rect">
+				coords="100,158,200,200" original-coords="100,158,200,200" shape="rect">
 				<!-- 100,128,100,100 -->
 			</map>
 		</div>
 	</div>
-	<div class="mobile-img-div">
+	<div class="mobile-img-div" style="position:relative">
 		<img src="m-anita1.png" alt="" />
+		<div id="mobile-bubble-1" class="mobile-bubble-tap" style="position: absolute;top: 39%;left: 30%;"
+		data-container="body" data-toggle="popover" data-placement="bottom" title="normal"
+		data-content="Smart self comparison accounts for changes in weather conditions and number of days in bill cycle">
+	</div>
 	</div>
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
 
 	<div id="popover-1" style="position: absolute;"> </div>
 	<div id="popover-bubble-line-1" class="bubble-line" style="position:absolute;"> </div>
 
-	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;" ></div>
+	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;"></div>
 
 <a href="#self" class="right-arrow mobile-touch">&nbsp;</a>
 

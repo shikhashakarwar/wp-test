@@ -126,6 +126,7 @@
 
 		.phone-layout { display: block; }
 	 	.set-phone-content { flex: 0 0 0% !important; }
+		 /* .overflow-hidden {overflow:visible !important;} */
 	}
 
 	@media (min-width: 860px){
@@ -165,8 +166,10 @@
 		right:0;
 		z-index: -100;
 	}
+</style>
 
-	.bubble-left:before {
+<style>
+		.bubble-left:before {
 		position: absolute;
 		left: -8px;
 		bottom: -4px;
@@ -195,30 +198,32 @@
 		transform: rotate(-164.83deg);
 	}
 
-	/* @media (min-width: 769px) {
-	.popover .arrow::after, .popover .arrow::before{
-		border-style: none !important;
-	}
-	.popover-header {
-		color: green;
-		background-color: white !important;
-		border-bottom: none !important;
-		font-weight: bold !important;
-		font-size: 20px !important;
+	.popover {
+    width: 140px;
+		border: none !important;
+    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.2);
 	}
 	.popover-body {
 		font-size: 12px !important;
 		padding: .75rem !important;
-		padding-top: 0px !important;
 	}
-}
+	@media (min-width: 1025px) {
+		.popover .arrow::after, .popover .arrow::before{
+			border-style: none !important;
+		}
+	}
+
+	.mobile-back {
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+	}
+
  @media (max-width: 1024px) {
 	.mobile-bubble-tap {
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
 		border: 1px solid rgba(100,100,100, .5);
-		background: #26ADE1;
+		background:#26ADE1;
 		padding: 0;
 		margin: 0;
 		animation: tapHere 2s infinite;
@@ -237,16 +242,15 @@
 		background: rgba(51, 50, 50, 0.35);
 	}
 
-	@keyframes tapHere {
+	 @keyframes tapHere {
 		0%   {transform: scale(0);}
-		15%  {transform: scale(1);}
-		30%  {transform: scale(0);}
+		35%  {transform: scale(1);}
 		100% {transform: scale(0);}
 	}
-} */
-
+}
 </style>
-<div class="overflow-hidden">
+<div >
+	<!-- class="overflow-hidden" -->
 <div class="container-fluid">
   <div class="row">
 	 <div  class="col-12" style="padding:0;">
@@ -331,9 +335,11 @@
 <div class="mobile-select" style="width:100%; max-width:500px; margin:auto; text-align: center; padding:30px; padding-bottom:0px;">
 </div>
 
-<div class="container-lg overflow-hidden">
+<div class="container-lg ">
+	<!-- overflow-hidden -->
 
-  <div id="rowadj" class="row overflow-hidden">
+  <div id="rowadj" class="row ">
+		<!-- overflow-hidden -->
 	  <div class="col-md-3" style="padding-bottom:15px;">
 			<div class="row">
 					<div class="container-fluid">
@@ -410,6 +416,7 @@
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 <!-- added self made js for bubble interaction -->
 
+
 <!-- Loading & Sizing -->
 <script>
 $(window).on("load", function() {
@@ -453,6 +460,13 @@ $(document).ajaxComplete(function(evt){
 $(window).resize(function() {
 	clearTimeout(window.resizedFinished);
 	window.resizedFinished = setTimeout(function(){
+
+		if($(window).width() < 767) {;
+			$('#phone-frame').css('display', 'none');
+		} else {
+			$('#phone-frame').css('display', 'inline-block');
+		}
+
 
 		var visheight = $(window).innerHeight();
 		var visheightadj = visheight - 95;  // -95 from window to make a visible area
@@ -631,11 +645,38 @@ function getAreaTagLength() {
 	return areaTagLength;
 }
 
-function UpdatePopoverView(str) {
+function updatePopoverView(str) {
 	var areaTagLength = getAreaTagLength();
 	for(let i = 1; i <= areaTagLength ; i++) {
-		$('#popover-bubble-line-'+i+', #popover-'+i+'').css('display', str);
+		$('#popover-'+i+'').css('display', str);
 	}
+}
+
+function updatePopoverLineView(str) {
+	var areaTagLength = getAreaTagLength();
+	for(let i = 1; i <= areaTagLength ; i++) {
+		$('#popover-bubble-line-'+i+'').css('display', str);
+	}
+}
+
+function updateMobileTabView(str) {
+	var areaTagLength = getAreaTagLength();
+	for(let i = 1; i <= areaTagLength ; i++) {
+		$('#mobile-bubble-tap-'+i+'').css('display', str);
+	}
+}
+
+function updateMobilePopoverView(str) {
+	var areaTagLength = getAreaTagLength();
+	for(let i = 1; i <= areaTagLength ; i++) {
+		$('#mobile-bubble-'+i+'').css('display', str);
+	}
+}
+
+function mobileClicktrigger() {
+	var areaTagLength = getAreaTagLength();
+	$('#mobile-bubble-'+areaTagLength+'').trigger('click');
+
 }
 
 function getCoords(id) {
@@ -679,22 +720,60 @@ function updatePopoverPosition(id, coordsArr, emailContentWidth, emailContentHei
 		position.top += 30;
 	}
 
-	// if($(window).width() > 1024) {
+	if($(window).width() > 1024) {
 		if(parseInt(coordsArr[0]) < (emailContentWidth / 2)) {  //150
 			$('#popover-'+id).css({'left': '-185px', 'top': position.top +'px'});
 			$('#popover-bubble-line-'+id).css({'left': '-17px', 'top': position.top+'px', 'width': position.left+'px'});  //-17px
 			$('#popover-bubble-line-'+id).addClass('bubble-left');
-			// $('#mobile-bubble-tap-'+id).css({'left': (left - 40) +'px', 'top':top +'px'});
 		} else {
 			$('#popover-'+id).css({'right': '18px', 'top': position.top +'px'});
 			$('#popover-bubble-line-'+id).css({'right': '-20px', 'top':position.top +'px', 'width': position.right+'px'});
 			$('#popover-bubble-line-'+id).addClass('bubble-right');
 			$('#popover-bubble-line-'+id).css('transform', 'rotate(-187.83deg)' );
-			// $('#mobile-bubble-tap-'+id).css({'right':  (right - 50) +'px', 'top': (top-50) +'px'});
 		}
 		$('#bubble-position-' + id).css('display', 'inline');
 		$('#bubble-position-'+id+'[data-toggle="popover"]').popover().popover('show').off('click');
-	// }
+	} else if($(window).width() >= 768 && $(window).width() <= 1024) {
+		updatePopoverView('block');
+		var store = $('#popover-'+id).children()[0];
+		let togglePopover ='show'
+		if($(store).hasClass('show')) {
+			togglePopover = 'hide'
+		}
+		$('#bubble-position-'+id+'[data-toggle="popover"]').popover({placement: 'top'}).popover(togglePopover);
+	}
+	else {
+		$('#mobile-bubble-'+id+'[data-toggle="popover"]').popover();
+	}
+}
+
+function mobileTabHerePosition(id) {
+	if($(window).width() >= 768 && $(window).width() <= 1024 ) {
+		var emailContent = getEmailContentHW();
+		var coordsArr = getCoords(id);
+		console.log(emailContent);
+		var phoneContainerHeight = $('#phone-content').height();
+		var position = getPopoverPosition(coordsArr, emailContent.width, emailContent.height);
+		updatePopoverLineView('none');
+		updateMobileTabView('block');
+
+		if(emailContent.height < phoneContainerHeight ) {
+			position.top += 30;
+		}
+		// console.log(position);
+		// console.log(coordsArr[0] + ' ' + (emailContent.width / 2));
+		if(parseInt(coordsArr[0]) < 200) { //150  (emailContent.width / 2)
+			$('#popover-'+id).css({'left': (position.left - 40) +'px', 'top': (position.top + 50) +'px'});
+			$('#mobile-bubble-tap-'+id).css({'left': (position.left - 20) +'px', 'top':(position.top + 20) +'px'});
+		} else {
+			$('#popover-'+id).css({'right': (position.right ) + 'px', 'top': (position.top +50) +'px'});
+			$('#mobile-bubble-tap-'+id).css({'right': (position.right - 50) +'px', 'top': (position.top) +'px'});
+		}
+	} else {
+		// console.log("mobile test");
+		$('.popover').remove();
+		updateMobileTabView('none');
+	}   // end of conditions
 }
 
 //////// function works when user scroll image /////////////
@@ -709,27 +788,62 @@ function scrollBubbleContent(el) {
 			var position = getPopoverPosition(coordsArr, emailContent.width, emailContent.height);
 			var imageTop = position.top + el.mcs.top ;
 
-			if(imageTop <= 0) {
-				$('#popover-bubble-line-'+i+', #popover-'+i+'').css('display', 'none');
+			if($(window).width() > 1024) {
+				if(imageTop <= 0) {
+					$('#popover-bubble-line-'+i+', #popover-'+i+'').css('display', 'none');
+				} else {
+					$('#popover-bubble-line-'+i+', #popover-'+i+'').css('display', 'block');
+				}
 			} else {
-				$('#popover-bubble-line-'+i+', #popover-'+i+'').css('display', 'block');
+				if(imageTop <= 0) {
+					$('#mobile-bubble-tap-'+i).css('display', 'none');
+				} else {
+					$('#mobile-bubble-tap-'+i).css('display', 'block');
+				}
 			}
 
 			if(!(imageTop <= 0)) {
-				$('#bubble-position-'+i).trigger( "click" );
-				$('#popover-bubble-line-'+i).css('top', imageTop +'px');
+				if($(window).width() > 1024) {
+					$('#bubble-position-'+i).trigger( "click" );
+					$('#popover-bubble-line-'+i).css('top', imageTop +'px');
+				} else {
+					$('#mobile-bubble-tap-'+i).css('top', imageTop +'px');
+					$('#popover-'+i).css('top', (imageTop + 50 )+'px');
+				}
 			}
+
 		}
 	}
 }
 
 function triggerOpenPopovers() {
 	var areaTagLength = getAreaTagLength();
-	setTimeout(function(){
+	if($(window).width() > 1024) {
+		updatePopoverView('block');
+		updatePopoverLineView('block')
+		setTimeout(function(){   //setting in timeout because we not getting popover before this
+			for(let i = 1; i <= areaTagLength ; i++) {
+				$('#bubble-position-'+i).trigger( "click", {triggerByJS: true});
+			}
+		}, 300);
+	} else {     /// mobile and tab view
+		console.log("width : " + $(window).width());
+		updatePopoverView('none');
+		updatePopoverLineView('none')
+		var areaTagLength = getAreaTagLength();
 		for(let i = 1; i <= areaTagLength ; i++) {
-			$('#bubble-position-'+i).trigger( "click", {triggerByJS: true});
+			mobileTabHerePosition(i);
+			if($(window).width() >= 768 && $(window).width() <= 1024) {
+				$(document).off('click', '#mobile-bubble-tap-'+i).on('click', '#mobile-bubble-tap-'+i, function() {
+					openPopover(i);
+				});
+			} else {
+				$(document).off('click', '#mobile-bubble-'+i).on('click', '#mobile-bubble-'+i, function() {
+					openPopover(i);
+				});
+			}
 		}
-	}, 300);
+	}
 }
 
 $(window).on("load", function() {
@@ -755,46 +869,77 @@ $(document).ready(function(){
 	}
 
 	function setBacktoMailPhoneFrame() {
-		// on [0] poisition we get inbox frame and on [1] we get backToMail frame same for email
-		// we use hide and show concept because on load & resize  phone poistion is set acc. to screenSize
-		var inboxPhoneFrame = $('.phone-layout')[0];
-		var phoneHeight = $(inboxPhoneFrame).css('height');
-		$(inboxPhoneFrame).css('display', 'none');
+		if($(window).width() > 768) {
+			// on [0] poisition we get inbox frame and on [1] we get backToMail frame same for email
+			// we use hide and show concept because on load & resize  phone poistion is set acc. to screenSize
+			var inboxPhoneFrame = $('.phone-layout')[0];
+			var phoneHeight = $(inboxPhoneFrame).css('height');
+			$(inboxPhoneFrame).css('display', 'none');
 
-		var backMailPhoneFrame = $('.phone-layout')[1];
-		$(backMailPhoneFrame).css('display', 'inline-block');
-		$(backMailPhoneFrame).css('height',phoneHeight );
+			var backMailPhoneFrame = $('.phone-layout')[1];
+			$(backMailPhoneFrame).css('display', 'inline-block');
+			$(backMailPhoneFrame).css('height',phoneHeight );
 
-		var inboxEmailContent = $('.email-content')[0];
-		$(inboxEmailContent).css('display', 'none');
-		UpdatePopoverView('none');
+			var inboxEmailContent = $('.email-content')[0];
+			$(inboxEmailContent).css('display', 'none');
+			updatePopoverView('none');
+			updatePopoverLineView('none')
+			updateMobileTabView('none');
 
-		var backEmailContent = $('.email-content')[1];
-		$(backEmailContent).css('display', 'inline-block');
+			var backEmailContent = $('.email-content')[1];
+			$(backEmailContent).css('display', 'inline-block');
 
-		$('#phone-content').css('top' , '24%');  // when we show backToMail phone frame
-		setNewFrame(24);
-		showPopover = false;
+			$('#phone-content').css('top' , '24%');  // when we show backToMail phone frame
+			setNewFrame(24);
+			showPopover = false;
+		} else {
+			var inboxPhoneFrame = $('.email-mobile')[0];
+			$(inboxPhoneFrame).css('display', 'none');
+			updateMobilePopoverView('none');
+			$('.popover').css('display', 'none');
+
+			var backPhoneFrame = $('.email-mobile')[1];
+			$(backPhoneFrame).css('display', 'inline-block');
+		}
+
 	}
 
 	function setInboxPhoneFrame() {
-		var backMailPhoneFrame = $('.phone-layout')[1];
-		var phoneHeight = $(backMailPhoneFrame).css('height');
-		$(backMailPhoneFrame).css('display', 'none');
+		if($(window).width() >= 768) {
+			var backMailPhoneFrame = $('.phone-layout')[1];
+			var phoneHeight = $(backMailPhoneFrame).css('height');
+			$(backMailPhoneFrame).css('display', 'none');
 
-		var inboxPhoneFrame = $('.phone-layout')[0];
-		$(inboxPhoneFrame).css('display', 'inline-block');
-		$(inboxPhoneFrame).css('height',phoneHeight );
+			var inboxPhoneFrame = $('.phone-layout')[0];
+			$(inboxPhoneFrame).css('display', 'inline-block');
+			$(inboxPhoneFrame).css('height',phoneHeight );
 
-		UpdatePopoverView('block');
-		var backEmailContent = $('.email-content')[1];
-		$(backEmailContent).css('display', 'none');
+			updatePopoverView('block');
+			updateMobileTabView('block');
 
-		var inboxEmailContent = $('.email-content')[0];
-		$(inboxEmailContent).css('display', 'inline-block');
+			if($(window).width() >= 768 && $(window).width() <= 1024) {
+				updatePopoverLineView('none');
+			} else {
+				updatePopoverLineView('block');
+			}
 
-		$('#phone-content').css('top' , '13%'); // when we show inbox phone frame
-		setNewFrame(13);
-		showPopover = true;
+			var backEmailContent = $('.email-content')[1];
+			$(backEmailContent).css('display', 'none');
+
+			var inboxEmailContent = $('.email-content')[0];
+			$(inboxEmailContent).css('display', 'inline-block');
+
+			$('#phone-content').css('top' , '13%'); // when we show inbox phone frame
+			setNewFrame(13);
+			showPopover = true;
+		} else {
+			var inboxPhoneFrame = $('.email-mobile')[1];
+			$(inboxPhoneFrame).css('display', 'none');
+			updateMobilePopoverView('block');
+			$('.popover').css('display', 'block');
+			mobileClicktrigger();
+			var backPhoneFrame = $('.email-mobile')[0];
+			$(backPhoneFrame).css('display', 'inline-block');
+		}
 	}
 </script>
