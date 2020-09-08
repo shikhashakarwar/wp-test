@@ -28,6 +28,7 @@
     border-bottom: none !important;
 		font-weight: bold !important;
 		font-size: 20px !important;
+		padding: .5rem !important;
 		padding-bottom: 0px !important;
 	}
 </style>
@@ -36,7 +37,7 @@
 		<div id="email-container" class="scroll-container" >
 			<img data-route-name="anita-jul" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
 			src="w-anita3.png" usemap="#image-map" alt="email content"/>
-			<map name="imag-map">
+			<map name="image-map">
 				<area style="display: inline;" id="bubble-position-1"  alt="" title="$72" onclick='openPopover(1);'
 				data-container="#popover-1" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Accurate bill projection using deep learning networks"
@@ -47,7 +48,7 @@
 				data-placement="left"
 				data-content="<div><a class='popup'>Click here </a></div>"
 				data-html="true"
-				coords="50,200,400,300" original-coords="50,200,400,300" shape="rect">
+				coords="80,220,400,300" original-coords="80,220,400,300" shape="rect">
 			</map>
 
 			<img class="email-content" style="display:none; z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
@@ -61,13 +62,15 @@
 			<img src="m-energy-insights-Anita-jul.png" alt="" />
 		</div>
 
-		<div id="mobile-bubble-1" class="mobile-bubble-tap" style="position: absolute;top: 32%;left: 75%;"
+		<div id="mobile-bubble-1" style="position: absolute;top: 32%;left: 75%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" title="$72"
 			data-content="Accurate bill projection using deep learning networks">
+			<div class="mobile-bubble-tap" ></div>
 		</div>
-		<div id="mobile-bubble-2" class="mobile-bubble-tap" style="position: absolute;top: 46%;left: 40%;"
+		<div id="mobile-bubble-2" style="position: absolute;top: 46%;left: 40%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" data-content="<div><a class='popup'>Click here </a></div>"
 			data-html="true">
+			<div class="mobile-bubble-tap" ></div>
 		</div>
 	</div>
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />

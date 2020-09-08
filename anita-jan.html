@@ -27,6 +27,7 @@
     border-bottom: none !important;
 		font-weight: bold !important;
 		font-size: 20px !important;
+		padding: .5rem !important;
 		padding-bottom: 0px !important;
 	}
 
@@ -36,7 +37,7 @@
 		<div id="email-container" class="scroll-container" >
 			<img data-route-name="anita-jan" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
 			src="w-anita-jan.png" usemap="#image-map" alt="email content"/>
-			<map name="imag-map">
+			<map name="image-map">
 				<area  id="bubble-position-1"  alt="" title="Hello" onclick='openPopover(1);'
 				data-container="#popover-1" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Welcome email to introduce the customer experience"
@@ -47,10 +48,12 @@
 	</div>
 	<div class="mobile-img-div" style="position:relative">
 		<img src="m-anita-jan.jpg" alt="" />
-		<div id="mobile-bubble-1" class="mobile-bubble-tap" style="position: absolute;top: 26%;left: 40%;"
-			data-container="body" data-toggle="popover" data-placement="bottom" title="Hello"
-			data-content="Welcome email to introduce the customer experience">
+		<div id="mobile-bubble-1" style="position: absolute;top: 26%;left: 40%; width:80px; height:50px;"
+		data-container="body" data-toggle="popover" data-placement="bottom" title="Hello"
+		data-content="Welcome email to introduce the customer experience">>
+			<div class="mobile-bubble-tap"> </div>
 		</div>
+
 	</div>
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
 	<div id="popover-1" style="position: absolute;"></div>

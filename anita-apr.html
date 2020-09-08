@@ -26,6 +26,7 @@
 		background-color: white !important;
     border-bottom: none !important;
 		font-size: 20px !important;
+		padding: .5rem !important;
 		padding-bottom: 0px !important;
 	}
 
@@ -38,7 +39,7 @@
 		<div id="email-container" class="scroll-container"  >
 			<img data-route-name="anita-apr" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
 			src="w-anita2.png" usemap="#image-map" alt="email content"/>
-			<map name="imag-map">
+			<map name="image-map">
 				<area style="display: inline;" id="bubble-position-1"  alt="" title="exceed" onclick='openPopover(1);'
 				data-container="#popover-1" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Intelligent alert triggering based on probability of exceeding budget"
@@ -55,7 +56,8 @@
 				data-placement="left"
 				data-content="<div><a class='popup'>Click here </a></div>"
 				data-html="true"
-				coords="50,265,400,365" original-coords="50,265,400,365" shape="rect">
+				coords="240,285,70,365" original-coords="240,285,70,365" shape="rect">
+				<!-- 50,265,400,365 -->
 			</map>
 
 			<img class="email-content" style="display:none; z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
@@ -69,17 +71,20 @@
 			<img src="m-Smart-Budget-anita-apr.png" alt="" />
 		</div>
 
-		<div id="mobile-bubble-1" class="mobile-bubble-tap" style="position: absolute;top: 45%;left: 27%;"
+		<div id="mobile-bubble-1" style="position: absolute;top: 45%;left: 27%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" title="exceed"
 			data-content="Intelligent alert triggering based on probability of exceeding budget">
+			<div class="mobile-bubble-tap" ></div>
 		</div>
-		<div id="mobile-bubble-2" class="mobile-bubble-tap" style="position: absolute;top: 40%;left: 46%;"
+		<div id="mobile-bubble-2" style="position: absolute;top: 40%;left: 46%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" title="$80"
 			data-content="Adaptive budget for each bill cycle based on your annual usage trend">
+			<div class="mobile-bubble-tap" ></div>
 		</div>
-		<div id="mobile-bubble-3" class="mobile-bubble-tap" style="position: absolute;top: 61%;left: 40%;"
+		<div id="mobile-bubble-3" style="position: absolute;top: 61%;left: 40%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" data-content="<div><a class='popup'>Click here </a></div>"
 			data-html="true">
+			<div class="mobile-bubble-tap" ></div>
 		</div>
 	</div>
 

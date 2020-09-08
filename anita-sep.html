@@ -28,6 +28,7 @@
     border-bottom: none !important;
 		font-weight: bold !important;
 		font-size: 20px !important;
+		padding: .5rem !important;
 		padding-bottom: 0px !important;
 	}
 </style>
@@ -36,7 +37,7 @@
 		<div id="email-container" class="scroll-container">
 			<img data-route-name="anita-sep" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; margin:auto;"
 			 src="w-anita4.png"usemap="#image-map" alt="email content"/>
-			 <map name="imag-map">
+			 <map name="image-map">
 				 <area style="display: inline;" id="bubble-position-1"  alt="" title="50%" onclick='openPopover(1);'
 				 data-container="#popover-1" data-toggle="popover"
 				 data-placement="left" title="Popover Header" data-content="Daily updated insights scored for relevance"
@@ -47,7 +48,7 @@
 				 data-placement="left"
 				 data-content="<div><a class='popup'>Click here </a></div>"
 				 data-html="true"
-				 coords="50,255,400,355" original-coords="50,250,400,355" shape="rect">
+				 coords="80,275,400,355" original-coords="80,275,400,355" shape="rect">
 
 			 </map>
 
@@ -63,13 +64,15 @@
 			<img src="m-energy-Insights-Usage-Anita-sep.png" alt="" />
 		</div>
 
-		<div id="mobile-bubble-1" class="mobile-bubble-tap" style="position: absolute;top: 35%;left: 45%;"
+		<div id="mobile-bubble-1" style="position: absolute;top: 35%;left: 45%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" title="50%"
 			data-content="Daily updated insights scored for relevance">
+				<div class="mobile-bubble-tap" ></div>
 		</div>
-		<div id="mobile-bubble-2" class="mobile-bubble-tap" style="position: absolute;top: 60%;left: 40%;"
+		<div id="mobile-bubble-2" style="position: absolute;top: 60%;left: 40%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" data-content="<div><a class='popup'>Click here </a></div>"
 			data-html="true">
+				<div class="mobile-bubble-tap" ></div>
 		</div>
 	</div>
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
