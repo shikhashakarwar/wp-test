@@ -1,28 +1,14 @@
 <!doctype html>
 <style>
-	.show-tap-image {
-		bottom: 50px;
-		display: block;
-		left: 58%;
-    max-width: 15px !important;
-    min-width: 60px !important;
-		position: fixed;
-	}
 	.scroll-container {overflow: auto; overflow-x: hidden;margin: 0 auto; border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px; }
 	@media (max-width: 767px) {
-		.show-tap-image {
-			left: 40%;
-			max-width: 20px !important;
-			min-width: 70px !important;
-		}
-		.mobile-touch { display: none !important;}
 		.scroll-container {display: none !important;}
 	}
 	.mCSB_inside > .mCSB_container {
 		margin-right: 0px!important;
 	}
-	.popover-header {
+	.popover-title {
 		background-color: white !important;
     border-bottom: none !important;
 		font-weight: bold !important;
@@ -38,20 +24,20 @@
 			<img data-route-name="anita-jan" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
 			src="w-anita-jan.png" usemap="#image-map" alt="email content"/>
 			<map name="image-map">
-				<area  id="bubble-position-1"  alt="" title="Hello" onclick='openPopover(1);'
+				<area style="display:block;" id="bubble-position-1"  alt="welcome email" title="Hello" onclick='openPopover(1, event);'
 				data-container="#popover-1" data-toggle="popover"
-				data-placement="left" title="Popover Header" data-content="Welcome email to introduce the customer experience"
+				data-placement="left" data-content="Welcome email to introduce the customer experience"
 				coords="114,95,204,205" original-coords="114,95,204,205" shape="rect">
 				<!-- 114,95,124,105 -->
 			</map>
 		</div>
 	</div>
 	<div class="mobile-img-div" style="position:relative">
-		<img src="m-anita-jan.jpg" alt="" />
-		<div id="mobile-bubble-1" style="position: absolute;top: 26%;left: 40%; width:80px; height:50px;"
+		<img id="mobile-img-load" src="m-anita-jan.jpg" alt="" />
+		<div id="mobile-bubble-1" style="display:none; position: absolute;top: 26%;left: 40%; width:80px; height:50px;"
 		data-container="body" data-toggle="popover" data-placement="bottom" title="Hello"
-		data-content="Welcome email to introduce the customer experience">>
-			<div class="mobile-bubble-tap"> </div>
+		data-content="Welcome email to introduce the customer experience">
+			<div class="dynamic-bubble"> </div>
 		</div>
 
 	</div>
@@ -59,7 +45,7 @@
 	<div id="popover-1" style="position: absolute;"></div>
 	<div id="popover-bubble-line-1" class="bubble-line" style="position:absolute;"> </div>
 
-	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;" ></div>
+	<div id="mobile-bubble-tap-1" style="display:none; position: absolute;" ></div>
 
 <a href="#self" class="right-arrow mobile-touch">&nbsp;</a>
 
@@ -67,9 +53,22 @@
 <script>
 	//Navi Naverton
 	$(document).ready(function() {
+
 		setTimeout(function() {
 			$('.show-tap-image').css("display", "none");
 		}, 3000);
+
+		if($(window).width() < 767) {
+			$('img#mobile-img-load').load(function() {
+				resizeFlag = true;
+				triggerOpenPopovers();
+			});
+		}else {
+			$('img#email-content').load(function() {
+				resizeFlag = true;
+				triggerOpenPopovers();
+			});
+		}
 
 		$('#email-content').on('dragstart', function(event) { event.preventDefault(); });
 
@@ -78,6 +77,7 @@
 		$('.scroll-container').mCustomScrollbar({
 			theme:"dark",
 			scrollbarPosition:"inside",
+			autoHideScrollbar: true,
 			callbacks:{
 				whileScrolling:function() {
 					scrollBubbleContent(this);
@@ -102,20 +102,28 @@
 		}
 
 			$(".left-arrow").click(function(){
+				updateMobilePopoverView('none');
+				resizeFlag = false;
 				leftArrowContent();
 			});
 
 			$(".right-arrow").click(function(){
+				updateMobilePopoverView('none');
+				resizeFlag = false;
 				rightArrowContent();
 			});
 
 			$(".mobile-img-div, .email-content ").on("swipeleft", function(e) {
 				e.preventDefault();
+				updateMobilePopoverView('none');
+				resizeFlag = false;
 				rightArrowContent();
 			});
 
 			$(".mobile-img-div, .email-content").on("swiperight", function(e) {
 				e.preventDefault();
+				resizeFlag = false;
+				updateMobilePopoverView('none');
 				leftArrowContent();
 			});
 	});

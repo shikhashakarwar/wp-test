@@ -1,28 +1,14 @@
 <!doctype html>
 <style>
-	.show-tap-image {
-		bottom: 50px;
-		display: block;
-		left: 58%;
-    max-width: 15px !important;
-    min-width: 60px !important;
-		position: fixed;
-	}
 	.scroll-container {overflow: auto; overflow-x: hidden;margin: 0 auto; border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px; }
 	@media (max-width: 767px) {
-		.show-tap-image {
-			left: 40%;
-			max-width: 20px !important;
-			min-width: 70px !important;
-		}
-		.mobile-touch { display: none !important;}
 		.scroll-container {display: none !important;}
 	}
 	.mCSB_inside > .mCSB_container {
 		margin-right: 0px!important;
 	}
-	.popover-header {
+	.popover-title {
 		color: green;
 		background-color: white !important;
     border-bottom: none !important;
@@ -31,47 +17,57 @@
 		padding: .5rem !important;
 		padding-bottom: 0px !important;
 	}
+
 </style>
-<a href="#self" class="left-arrow mobile-touch">&nbsp;</a>
+<a href="#self" class="left-arrow">&nbsp;</a>
 	<div class="screenshots">
 		<div id="email-container" class="scroll-container" >
 			<img data-route-name="anita-jul" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
 			src="w-anita3.png" usemap="#image-map" alt="email content"/>
 			<map name="image-map">
-				<area style="display: inline;" id="bubble-position-1"  alt="" title="$72" onclick='openPopover(1);'
+				<area style="display: inline;" id="bubble-position-1"  alt="" title="$72" onclick='openPopover(1, event);'
 				data-container="#popover-1" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Accurate bill projection using deep learning networks"
-				coords="200,135,85,100" original-coords="200,135,85,100" shape="rect">
+				coords="200,135,80,100" original-coords="200,130,80,100" shape="rect">
 
-				<area style="display: inline;" id="bubble-position-2" title="" alt=""  onclick='openPopover(2);'
-				data-container="#popover-2" data-toggle="popover"
-				data-placement="left"
-				data-content="<div><a class='popup'>Click here </a></div>"
-				data-html="true"
+				<area style="display: inline;" id="bubble-position-2"
 				coords="80,220,400,300" original-coords="80,220,400,300" shape="rect">
 			</map>
 
+			<div class="back-to-mail-button" onclick="setBacktoMailPhoneFrame();"
+			style="top:40%;"></div>
+
+			<div id="web-bubble-1" style="display:none; cursor: pointer; position: absolute;top:40%;left: 40%; width:80px; height:50px;" onclick="setBacktoMailPhoneFrame()">
+				<div class="dynamic-bubble"> </div>
+			</div>
 			<img class="email-content" style="display:none; z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
 			src="m-energy-insights-Anita-jul.png" alt="email content"/>
 		</div>
 	</div>
 	<div class="mobile-img-div" style="position:relative">
-		<img class="email-mobile" src="m-anita3.png" alt="" />
+		<img id="mobile-img-load" class="email-mobile" src="m-anita3.png" alt="" />
 		<div class="email-mobile" style="display:none;">
-			<img class="mobile-back" src="backToMail-mobile.png" onclick="setInboxPhoneFrame();" alt="" />
+			<img class="mobile-back" src="backToMail-mobile.png"
+				style="position:relative" alt="" />
+				<div class="back-to-mail-button" style="top: 5px;" onclick="setInboxPhoneFrame();">
+					<div class="dynamic-bubble"> </div>
+				</div>
 			<img src="m-energy-insights-Anita-jul.png" alt="" />
 		</div>
 
-		<div id="mobile-bubble-1" style="position: absolute;top: 32%;left: 75%; width:80px; height:50px;"
+		<div id="mobile-bubble-1" style="display:none; position: absolute;top: 32%;left: 75%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" title="$72"
 			data-content="Accurate bill projection using deep learning networks">
-			<div class="mobile-bubble-tap" ></div>
+			<div class="dynamic-bubble"> </div>
 		</div>
-		<div id="mobile-bubble-2" style="position: absolute;top: 46%;left: 40%; width:80px; height:50px;"
-			data-container="body" data-toggle="popover" data-placement="bottom" data-content="<div><a class='popup'>Click here </a></div>"
-			data-html="true">
-			<div class="mobile-bubble-tap" ></div>
+		<div id="mobile-bubble-2" style="display:none; cursor: pointer; position: absolute;top: 46%;left: 40%; width:80px; height:50px;">
+			<div class="dynamic-bubble"> </div>
 		</div>
+
+		<div class="back-to-mail-button" onclick='setBacktoMailPhoneFrame();'
+		 	style="top: 46%;">
+		</div>
+
 	</div>
 	<img class="show-tap-image" src="simple-swiping_transparent.gif" />
 
@@ -81,10 +77,10 @@
 	<div id="popover-2" style="position: absolute;"> </div>
 	<div id="popover-bubble-line-2" class="bubble-line" style="position:absolute;"> </div>
 
-	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;" ></div>
-	<div id="mobile-bubble-tap-2" class="mobile-bubble-tap" style="position: absolute;" ></div>
+	<div id="mobile-bubble-tap-1" style="position: absolute;" ></div>
+	<div id="mobile-bubble-tap-2" style="position: absolute;" ></div>
 
-<a href="#self" class="right-arrow mobile-touch">&nbsp;</a>
+<a href="#self" class="right-arrow">&nbsp;</a>
 
 <!-- three -->
 <script>
@@ -93,6 +89,18 @@ $(document).ready(function() {
 	setTimeout(function(){
 		$('.show-tap-image').css("display", "none");
 	}, 3000);
+
+	if($(window).width() < 767) {
+		$('img#mobile-img-load').load(function() {
+			resizeFlag = true;
+		triggerOpenPopovers();
+		});
+	} else {
+		$('img#email-content').load(function() {
+			resizeFlag = true;
+		triggerOpenPopovers();
+		});
+	}
 
 	$(document).on("click", ".popup", function() {
 		setBacktoMailPhoneFrame();
@@ -105,6 +113,7 @@ $(document).ready(function() {
 	$('.scroll-container').mCustomScrollbar({
 		theme:"dark",
 		scrollbarPosition:"inside",
+		autoHideScrollbar: true,
 		callbacks:{
 			whileScrolling:function() {
 				scrollBubbleContent(this);
@@ -133,20 +142,28 @@ $(document).ready(function() {
 	}
 
 	$(".left-arrow").click(function(){
+		updateMobilePopoverView('none');
+		resizeFlag = false;
 		leftArrowContent();
 	});
 
 	$(".right-arrow").click(function(){
+		updateMobilePopoverView('none');
+		resizeFlag = false;
 		rightArrowContent();
 	});
 
 	$(".mobile-img-div, .email-content").on("swipeleft", function(e) {
 		e.preventDefault();
+		updateMobilePopoverView('none');
+		resizeFlag = false;
 		rightArrowContent();
 	});
 
 	$(".mobile-img-div, .email-content").on("swiperight", function(e) {
 		e.preventDefault();
+		updateMobilePopoverView('none');
+		resizeFlag = false;
 		leftArrowContent();
 	});
 

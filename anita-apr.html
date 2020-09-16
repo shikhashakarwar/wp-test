@@ -1,28 +1,14 @@
 <!doctype html>
 <style>
-	.show-tap-image {
-		bottom: 50px;
-		display: block;
-		left: 58%;
-    max-width: 15px !important;
-    min-width: 60px !important;
-		position: fixed;
-	}
 	.scroll-container {overflow: auto; overflow-x: hidden;margin: 0 auto; border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px; }
 	@media (max-width: 767px) {
-		.show-tap-image {
-			left: 40%;
-			max-width: 20px !important;
-			min-width: 70px !important;
-		}
-		.mobile-touch { display: none !important;}
 		.scroll-container {display: none !important;}
 	}
 	.mCSB_inside > .mCSB_container {
 		margin-right: 0px!important;
 	}
-	.popover-header {
+	.popover-title {
 		background-color: white !important;
     border-bottom: none !important;
 		font-size: 20px !important;
@@ -30,62 +16,72 @@
 		padding-bottom: 0px !important;
 	}
 
-	#popover-1 h3.popover-header {
+	#popover-1 h3.popover-title {
 		color: red;
 	}
 </style>
-<a href="#self" class="left-arrow mobile-touch">&nbsp;</a>
+<a href="#self" class="left-arrow">&nbsp;</a>
 	<div class="screenshots">
 		<div id="email-container" class="scroll-container"  >
 			<img data-route-name="anita-apr" class="email-content" id="email-content" style="z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
 			src="w-anita2.png" usemap="#image-map" alt="email content"/>
 			<map name="image-map">
-				<area style="display: inline;" id="bubble-position-1"  alt="" title="exceed" onclick='openPopover(1);'
+				<area style="display: inline;" id="bubble-position-1"  alt="" title="exceed" onclick='openPopover(1, event);'
 				data-container="#popover-1" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Intelligent alert triggering based on probability of exceeding budget"
-				coords="100,170,100,100" original-coords="100,170,100,100" shape="rect">
+				coords="100,182,100,100" original-coords="100,176,100,100" shape="rect">
 
-				<area style="display: inline;" id="bubble-position-2" alt="" title="$80" onclick='openPopover(2);'
+				<area style="display: inline;" id="bubble-position-2" alt="" title="$80" onclick='openPopover(2, event);'
 				data-container="#popover-2" data-toggle="popover"
 				data-placement="left" title="Popover Header" data-content="Adaptive budget for each bill cycle based on your annual usage trend"
-				coords="240,145,145,100" original-coords="240,145,145,100" shape="rect">
+				coords="240,154,138,100" original-coords="240,145,138,100" shape="rect">
 
 				<!-- 240,140,145,100 -->
-				<area style="display: inline;" id="bubble-position-3" title="" alt="" onclick='openPopover(3);'
-				data-container="#popover-3" data-toggle="popover"
-				data-placement="left"
-				data-content="<div><a class='popup'>Click here </a></div>"
-				data-html="true"
+				<area style="display: inline;" id="bubble-position-3"
 				coords="240,285,70,365" original-coords="240,285,70,365" shape="rect">
 				<!-- 50,265,400,365 -->
 			</map>
+
+			<div class="back-to-mail-button" onclick="setBacktoMailPhoneFrame();"
+			style="top:57%;"></div>
+
+
+			<div id="web-bubble-1" style="display:none; cursor: pointer; position: absolute;top:57%;left: 40%; width:80px; height:50px;" onclick="setBacktoMailPhoneFrame()">
+				<div class="dynamic-bubble"> </div>
+			</div>
 
 			<img class="email-content" style="display:none; z-index:-1 !important; width:0px; top:0; margin:auto; left:0px; right:0"
 			src="m-Smart-Budget-anita-apr.png" alt="email content"/>
 		</div>
 	</div>
 	<div class="mobile-img-div" style="position:relative" >
-		<img class="email-mobile" src="m-anita2.png" alt="" />
+		<img id="mobile-img-load" class="email-mobile" src="m-anita2.png" alt="" />
 		<div class="email-mobile" style="display:none;">
-			<img class="mobile-back" src="backToMail-mobile.png" onclick="setInboxPhoneFrame();" alt="" />
+			<img class="mobile-back" src="backToMail-mobile.png"
+			style="position:relative" alt="" />
+			<div class="back-to-mail-button" style="top: 5px;" onclick="setInboxPhoneFrame();">
+				<div class="dynamic-bubble"> </div>
+			</div>
 			<img src="m-Smart-Budget-anita-apr.png" alt="" />
 		</div>
 
-		<div id="mobile-bubble-1" style="position: absolute;top: 45%;left: 27%; width:80px; height:50px;"
+		<div id="mobile-bubble-1" style="display:none; position: absolute;top: 45%;left: 27%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" title="exceed"
 			data-content="Intelligent alert triggering based on probability of exceeding budget">
-			<div class="mobile-bubble-tap" ></div>
+			<div class="mobile-bubble-tap"> </div>
 		</div>
-		<div id="mobile-bubble-2" style="position: absolute;top: 40%;left: 46%; width:80px; height:50px;"
+		<div id="mobile-bubble-2" style="display:none; position: absolute;top: 40%;left: 46%; width:80px; height:50px;"
 			data-container="body" data-toggle="popover" data-placement="bottom" title="$80"
 			data-content="Adaptive budget for each bill cycle based on your annual usage trend">
-			<div class="mobile-bubble-tap" ></div>
+			<div class="dynamic-bubble"> </div>
 		</div>
-		<div id="mobile-bubble-3" style="position: absolute;top: 61%;left: 40%; width:80px; height:50px;"
-			data-container="body" data-toggle="popover" data-placement="bottom" data-content="<div><a class='popup'>Click here </a></div>"
-			data-html="true">
-			<div class="mobile-bubble-tap" ></div>
+		<div id="mobile-bubble-3" style="display:none; position: absolute;top: 61%;left: 40%; width:80px; height:50px;">
+			<div class="dynamic-bubble"> </div>
 		</div>
+
+		<div class="back-to-mail-button" onclick='setBacktoMailPhoneFrame();'
+			style="top: 61%;">
+	 </div>
 	</div>
 
 
@@ -99,16 +95,31 @@
 	<div id="popover-3" style="position: absolute;"> </div>
 	<div id="popover-bubble-line-3" class="bubble-line" style="position:absolute;"> </div>
 
-	<div id="mobile-bubble-tap-1" class="mobile-bubble-tap" style="position: absolute;" ></div>
-	<div id="mobile-bubble-tap-2" class="mobile-bubble-tap" style="position: absolute;" ></div>
-	<div id="mobile-bubble-tap-3" class="mobile-bubble-tap" style="position: absolute;" ></div>
+	<div id="mobile-bubble-tap-1"  style="display:none; position: absolute;" ></div>
+	<div id="mobile-bubble-tap-2"  style="display:none; position: absolute;" ></div>
+	<div id="mobile-bubble-tap-3"  style="display:none; position: absolute;" ></div>
 
-<a href="#self" class="right-arrow mobile-touch">&nbsp;</a>
+<a href="#self" class="right-arrow">&nbsp;</a>
 
 <!-- two -->
 <script>
 //Navi Naverton
 $(document).ready(function(){
+
+	if($(window).width() < 767) {
+		console.log($('.mobile-img-div img.email-mobile[0]'));
+		// debugger;
+		$('img#mobile-img-load').load(function() {
+			resizeFlag = true;
+			triggerOpenPopovers();
+		});
+	} else {
+		$('img#email-content').load(function() {
+			resizeFlag = true;
+		triggerOpenPopovers();
+		});
+	}
+
 	setTimeout(function(){
 		$('.show-tap-image').css("display", "none");
 	}, 3000);
@@ -124,6 +135,7 @@ $(document).ready(function(){
 	$('.scroll-container').mCustomScrollbar({
 		theme:"dark",
 		scrollbarPosition:"inside",
+		autoHideScrollbar: true,
 		callbacks:{
 			whileScrolling:function() {
 				scrollBubbleContent(this);
@@ -152,20 +164,28 @@ $(document).ready(function(){
 	}
 
 	$(".left-arrow").click(function(){
+		updateMobilePopoverView('none');
+		resizeFlag = false;
 		leftArrowContent();
 	});
 
 	$(".right-arrow").click(function(){
+		updateMobilePopoverView('none');
+		resizeFlag = false;
 		rightArrowContent();
 	});
 
 	$(".mobile-img-div, .email-content").on("swipeleft", function(e) {
 		e.preventDefault();
+		updateMobilePopoverView('none');
+		resizeFlag = false;
 		rightArrowContent();
 	});
 
 	$(".mobile-img-div, .email-content").on("swiperight", function(e) {
 		e.preventDefault();
+		updateMobilePopoverView('none');
+		resizeFlag = false;
 		leftArrowContent();
 	});
 
